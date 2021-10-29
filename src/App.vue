@@ -1,19 +1,43 @@
 <template>
   <h1>Memory cards :)</h1>
   <section class="board">
-    <Card v-for="(card,i) in 64"
+    <Card v-for="(card,i) in gameList"
           :key="`card-${i}`"
-          :value="card">{card}</Card>
+          :value="card.value"
+          :visible="card.visible"
+          :position="card.position"
+          @select-card="flipCard"
+    >
+    </Card>
   </section>
 </template>
 
 <script>
 import Card from "./components/Card";
+import {ref} from 'vue'
 
 export default {
   name: 'Memory card game',
   components: {
     Card
+  },
+  setup() {
+    const gameList = ref([])
+    for (let i = 0; i < 64; i++) {
+      gameList.value.push({
+        value: i,
+        visible: false,
+        position: i
+      })
+    }
+    const flipCard = (payload) => {
+      gameList.value[payload.position].visible = true
+    }
+
+    return {
+      gameList,
+      flipCard
+    }
   }
 }
 </script>
