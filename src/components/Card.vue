@@ -26,9 +26,9 @@ export default {
       required: true
     }
   },
-  setup(props,context) {
-    const selectCard = () =>{
-      context.emit('select-card',{
+  setup(props, context) {
+    const selectCard = () => {
+      context.emit('select-card', {
         position: props.position
       })
     }
@@ -45,6 +45,7 @@ export default {
   border-radius: 50%;
   position: relative;
 }
+
 .card div {
   display: flex;
   justify-content: center;
