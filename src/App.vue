@@ -16,7 +16,7 @@
 
 <script>
 import Card from "./components/Card";
-import {ref,watch} from 'vue'
+import {ref,watch, computed} from 'vue'
 
 export default {
   name: 'Memory card game',
@@ -26,10 +26,20 @@ export default {
   setup() {
     const gameList = ref([])
     const userSelected = ref([])
-    const status = ref('')
+    const status = computed(()=>{
+      if(pairs.value===0){
+        return 'player wins'
+      } else {
+        return `remaining pairs : ${pairs.value}`
+      }
+    })
+    const pairs = computed(()=>{
+      const cards = gameList.value.filter((card)=>card.matched===false).length
+      return cards/2
+    })
     for (let i = 0; i < 64; i++) {
       gameList.value.push({
-        value: i,
+        value: 2,
         visible: false,
         position: i,
         matched: false
