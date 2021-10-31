@@ -24,6 +24,11 @@ export default {
     visible: {
       type: Boolean,
       required: true
+    },
+    matched: {
+      type: Boolean,
+      required: true,
+      default:false
     }
   },
   setup(props, context) {

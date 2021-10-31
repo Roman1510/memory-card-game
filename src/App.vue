@@ -6,6 +6,7 @@
           :value="card.value"
           :visible="card.visible"
           :position="card.position"
+          :matched="card.matched"
           @select-card="flipCard"
     >
     </Card>
@@ -30,7 +31,8 @@ export default {
       gameList.value.push({
         value: i,
         visible: false,
-        position: i
+        position: i,
+        matched: false
       })
     }
     const flipCard = (payload) => {
@@ -50,12 +52,15 @@ export default {
 
         if(cardOne.faceValue === cardTwo.faceValue) {
           status.value = 'Matched'
+          gameList.value[cardOne.position].matched = true
+          gameList.value[cardTwo.position].matched = true
         } else {
           status.value = 'shit'
+          gameList.value[cardOne.position].visible = false
+          gameList.value[cardTwo.position].visible = false
         }
 
-        gameList.value[cardOne.position].visible = false
-        gameList.value[cardTwo.position].visible = false
+
 
         userSelected.value.length=0
       }
