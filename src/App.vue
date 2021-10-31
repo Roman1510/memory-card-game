@@ -10,11 +10,12 @@
     >
     </Card>
   </section>
+  <h2>{{status}}</h2>
 </template>
 
 <script>
 import Card from "./components/Card";
-import {ref} from 'vue'
+import {ref,watch} from 'vue'
 
 export default {
   name: 'Memory card game',
@@ -23,6 +24,8 @@ export default {
   },
   setup() {
     const gameList = ref([])
+    const userSelected = ref([])
+    const status = ref('')
     for (let i = 0; i < 64; i++) {
       gameList.value.push({
         value: i,
@@ -32,11 +35,37 @@ export default {
     }
     const flipCard = (payload) => {
       gameList.value[payload.position].visible = true
+      if(userSelected.value[0]){
+        userSelected.value[1]= payload
+      } else {
+        userSelected.value[0] = payload
+      }
     }
+
+    watch(userSelected, (currValue)=>{
+      if(currValue.length===2){
+
+        const cardOne = currValue[0]
+        const cardTwo = currValue[1]
+
+        if(cardOne.faceValue === cardTwo.faceValue) {
+          status.value = 'Matched'
+        } else {
+          status.value = 'shit'
+        }
+
+        gameList.value[cardOne.position].visible = false
+        gameList.value[cardTwo.position].visible = false
+
+        userSelected.value.length=0
+      }
+    }, {deep:true})
 
     return {
       gameList,
-      flipCard
+      flipCard,
+      userSelected,
+      status
     }
   }
 }

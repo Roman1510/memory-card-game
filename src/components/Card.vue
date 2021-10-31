@@ -29,7 +29,8 @@ export default {
   setup(props, context) {
     const selectCard = () => {
       context.emit('select-card', {
-        position: props.position
+        position: props.position,
+        faceValue: props.value
       })
     }
     return {
