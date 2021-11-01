@@ -11,12 +11,14 @@
     >
     </Card>
   </section>
-  <h2>{{status}}</h2>
+  <h2>{{ status }}</h2>
+  <button @click="randomizeCards()"></button>
 </template>
 
 <script>
+import _ from 'lodash';
 import Card from "./components/Card";
-import {ref,watch, computed} from 'vue'
+import {ref, watch, computed} from 'vue'
 
 export default {
   name: 'Memory card game',
@@ -26,17 +28,22 @@ export default {
   setup() {
     const gameList = ref([])
     const userSelected = ref([])
-    const status = computed(()=>{
-      if(pairs.value===0){
+    const status = computed(() => {
+      if (pairs.value === 0) {
         return 'player wins'
       } else {
         return `remaining pairs : ${pairs.value}`
       }
     })
-    const pairs = computed(()=>{
-      const cards = gameList.value.filter((card)=>card.matched===false).length
-      return cards/2
+    const pairs = computed(() => {
+      const cards = gameList.value.filter((card) => card.matched === false).length
+      return cards / 2
     })
+
+    const randomizeCards = () =>{
+      gameList.value = _.shuffle(gameList.value)
+    }
+
     for (let i = 0; i < 64; i++) {
       gameList.value.push({
         value: 2,
@@ -47,20 +54,20 @@ export default {
     }
     const flipCard = (payload) => {
       gameList.value[payload.position].visible = true
-      if(userSelected.value[0]){
-        userSelected.value[1]= payload
+      if (userSelected.value[0]) {
+        userSelected.value[1] = payload
       } else {
         userSelected.value[0] = payload
       }
     }
 
-    watch(userSelected, (currValue)=>{
-      if(currValue.length===2){
+    watch(userSelected, (currValue) => {
+      if (currValue.length === 2) {
 
         const cardOne = currValue[0]
         const cardTwo = currValue[1]
 
-        if(cardOne.faceValue === cardTwo.faceValue) {
+        if (cardOne.faceValue === cardTwo.faceValue) {
           status.value = 'Matched'
           gameList.value[cardOne.position].matched = true
           gameList.value[cardTwo.position].matched = true
@@ -71,16 +78,16 @@ export default {
         }
 
 
-
-        userSelected.value.length=0
+        userSelected.value.length = 0
       }
-    }, {deep:true})
+    }, {deep: true})
 
     return {
       gameList,
       flipCard,
       userSelected,
-      status
+      status,
+      randomizeCards
     }
   }
 }
