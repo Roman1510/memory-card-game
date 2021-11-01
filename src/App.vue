@@ -12,7 +12,7 @@
     </Card>
   </section>
   <h2>{{ status }}</h2>
-  <button @click="randomizeCards()"></button>
+  <button @click="restartGame"></button>
 </template>
 
 <script>
@@ -25,7 +25,7 @@ export default {
   components: {
     Card
   },
-  setup() {
+  setup: function () {
     const gameList = ref([])
     const userSelected = ref([])
     const status = computed(() => {
@@ -40,18 +40,56 @@ export default {
       return cards / 2
     })
 
-    const randomizeCards = () =>{
+    const randomizeCards = () => {
       gameList.value = _.shuffle(gameList.value)
     }
 
-    for (let i = 0; i < 64; i++) {
-      gameList.value.push({
-        value: 2,
-        visible: false,
-        position: i,
-        matched: false
+    const restartGame = () =>{
+      randomizeCards()
+
+      gameList.value = gameList.value.map((card,index)=>{
+        return {
+          ...card,
+          matched: false,
+          visible:false,
+          position:index
+        }
       })
     }
+
+    const cardItems = (function(){
+      let result = []
+      for (let i = 1; i <= 32; i++) {
+        result.push(i)
+      }
+      return result
+    }())
+
+    console.log(cardItems)
+    cardItems.forEach(item=>{{
+      gameList.value.push({
+        value:item,
+        visible:true,
+        position: null,
+        matched:false
+      })
+
+
+      gameList.value.push({
+        value:item,
+        visible:true,
+        position: null,
+        matched:false
+      })
+    }})
+
+      gameList.value = gameList.value.map((card,index)=>{
+        return{
+          ...card,
+          position: index
+        }
+      })
+
     const flipCard = (payload) => {
       gameList.value[payload.position].visible = true
       if (userSelected.value[0]) {
@@ -68,11 +106,9 @@ export default {
         const cardTwo = currValue[1]
 
         if (cardOne.faceValue === cardTwo.faceValue) {
-          status.value = 'Matched'
           gameList.value[cardOne.position].matched = true
           gameList.value[cardTwo.position].matched = true
         } else {
-          status.value = 'shit'
           gameList.value[cardOne.position].visible = false
           gameList.value[cardTwo.position].visible = false
         }
@@ -87,7 +123,8 @@ export default {
       flipCard,
       userSelected,
       status,
-      randomizeCards
+      randomizeCards,
+      restartGame
     }
   }
 }

@@ -1,7 +1,7 @@
 <template>
   <div class="card" @click="selectCard">
     <div v-if="visible" class="card-face is-front">
-      <div>{{ position }}</div>
+      <div>{{value}} - {{ position }}</div>
     </div>
     <div v-else class="card-face is-back">
       back
