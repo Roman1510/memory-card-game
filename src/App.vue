@@ -69,7 +69,7 @@ export default {
     cardItems.forEach(item=>{{
       gameList.value.push({
         value:item,
-        visible:true,
+        visible:false,
         position: null,
         matched:false
       })
@@ -77,7 +77,7 @@ export default {
 
       gameList.value.push({
         value:item,
-        visible:true,
+        visible:false,
         position: null,
         matched:false
       })
@@ -109,8 +109,11 @@ export default {
           gameList.value[cardOne.position].matched = true
           gameList.value[cardTwo.position].matched = true
         } else {
-          gameList.value[cardOne.position].visible = false
-          gameList.value[cardTwo.position].visible = false
+          setTimeout(()=>{
+            gameList.value[cardOne.position].visible = false
+            gameList.value[cardTwo.position].visible = false
+          },2000)
+
         }
 
 
