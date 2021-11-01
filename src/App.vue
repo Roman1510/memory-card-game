@@ -44,20 +44,20 @@ export default {
       gameList.value = _.shuffle(gameList.value)
     }
 
-    const restartGame = () =>{
+    const restartGame = () => {
       randomizeCards()
 
-      gameList.value = gameList.value.map((card,index)=>{
+      gameList.value = gameList.value.map((card, index) => {
         return {
           ...card,
           matched: false,
-          visible:false,
-          position:index
+          visible: false,
+          position: index
         }
       })
     }
 
-    const cardItems = (function(){
+    const cardItems = (function () {
       let result = []
       for (let i = 1; i <= 32; i++) {
         result.push(i)
@@ -66,34 +66,41 @@ export default {
     }())
 
     console.log(cardItems)
-    cardItems.forEach(item=>{{
-      gameList.value.push({
-        value:item,
-        visible:false,
-        position: null,
-        matched:false
-      })
+    cardItems.forEach(item => {
+      {
+        gameList.value.push({
+          value: item,
+          visible: false,
+          position: null,
+          matched: false
+        })
 
 
-      gameList.value.push({
-        value:item,
-        visible:false,
-        position: null,
-        matched:false
-      })
-    }})
+        gameList.value.push({
+          value: item,
+          visible: false,
+          position: null,
+          matched: false
+        })
+      }
+    })
 
-      gameList.value = gameList.value.map((card,index)=>{
-        return{
-          ...card,
-          position: index
-        }
-      })
+    gameList.value = gameList.value.map((card, index) => {
+      return {
+        ...card,
+        position: index
+      }
+    })
 
     const flipCard = (payload) => {
       gameList.value[payload.position].visible = true
       if (userSelected.value[0]) {
-        userSelected.value[1] = payload
+        if (userSelected.value[0].position === payload.position &&
+            userSelected.value[0].faceValue === payload.faceValue) {
+          return
+        } else {
+          userSelected.value[1] = payload
+        }
       } else {
         userSelected.value[0] = payload
       }
@@ -109,10 +116,10 @@ export default {
           gameList.value[cardOne.position].matched = true
           gameList.value[cardTwo.position].matched = true
         } else {
-          setTimeout(()=>{
+          setTimeout(() => {
             gameList.value[cardOne.position].visible = false
             gameList.value[cardTwo.position].visible = false
-          },2000)
+          }, 2000)
 
         }
 
