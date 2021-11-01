@@ -1,9 +1,9 @@
 <template>
   <h1>Memory cards :)</h1>
   <h2>{{ status }}</h2>
-  <section class="board">
-    <Card v-for="(card,i) in gameList"
-          :key="`card-${i}`"
+  <transition-group tag="section" name="shuffle-animation" class="board">
+    <Card v-for="(card) in gameList"
+          :key="`card-${card.value}-${card.sort}`"
           :value="card.value"
           :visible="card.visible"
           :position="card.position"
@@ -11,7 +11,7 @@
           @select-card="flipCard"
     >
     </Card>
-  </section>
+  </transition-group>
 
   <button @click="restartGame">Start over!</button>
 </template>
@@ -41,12 +41,8 @@ export default {
       return cards / 2
     })
 
-    const randomizeCards = () => {
-      gameList.value = _.shuffle(gameList.value)
-    }
-
     const restartGame = () => {
-      randomizeCards()
+      gameList.value = _.shuffle(gameList.value)
 
       gameList.value = gameList.value.map((card, index) => {
         return {
@@ -72,7 +68,8 @@ export default {
           value: item,
           visible: false,
           position: null,
-          matched: false
+          matched: false,
+          sort:1
         })
 
 
@@ -80,7 +77,8 @@ export default {
           value: item,
           visible: false,
           position: null,
-          matched: false
+          matched: false,
+          sort:2
         })
       }
     })
@@ -133,7 +131,6 @@ export default {
       flipCard,
       userSelected,
       status,
-      randomizeCards,
       restartGame
     }
   }
@@ -171,6 +168,10 @@ h1, h2 {
 }
 button{
   margin-top: 20px;
+}
+
+.shuffle-animation-move {
+  transition: transform 0.7s ease-in;
 }
 
 </style>
