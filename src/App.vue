@@ -20,6 +20,7 @@
 import _ from 'lodash';
 import Card from "./components/Card";
 import {ref, watch, computed} from 'vue'
+import {launchConfetti} from "./utilities/confetti";
 
 export default {
   name: 'Memory card game',
@@ -103,6 +104,12 @@ export default {
         userSelected.value[0] = payload
       }
     }
+
+    watch(pairs, currValue=>{
+      if(currValue===0){
+        launchConfetti()
+      }
+    })
 
     watch(userSelected, (currValue) => {
       if (currValue.length === 2) {
