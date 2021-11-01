@@ -1,10 +1,9 @@
 <template>
-  <div class="card" @click="selectCard">
+  <div class="card" @click="selectCard" :class="{'icon-checkmark': matched}">
     <div v-if="visible" class="card-face is-front">
-      <div>{{value}} - {{ position }}</div>
+      <img :src="`/images/${value}.png`" :alt="value">
     </div>
     <div v-else class="card-face is-back">
-      back
     </div>
   </div>
 </template>
@@ -18,7 +17,7 @@ export default {
       required: true
     },
     value: {
-      type: Number,
+      type: String,
       required: true
     },
     visible: {
@@ -47,7 +46,7 @@ export default {
 
 <style scoped>
 .card {
-  border: 2px solid #253f84;
+  border: 1px solid #253f84;
   border-radius: 50%;
   position: relative;
 }
@@ -66,13 +65,19 @@ export default {
   position: absolute;
 }
 
-.card-face.is-front {
-  background-color: red;
-  color: white;
+.card-face.is-front img{
+  height: 70px;
+  width: 70px;
 }
 
 .card-face.is-back {
-  background-color: black;
+  background-image: url("/images/enotik.png");
+  background-size: 80px;
   color: white;
 }
+
+.icon-checkmark{
+  border: brown solid 5px;
+}
+
 </style>

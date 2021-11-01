@@ -1,5 +1,6 @@
 <template>
   <h1>Memory cards :)</h1>
+  <h2>{{ status }}</h2>
   <section class="board">
     <Card v-for="(card,i) in gameList"
           :key="`card-${i}`"
@@ -11,7 +12,7 @@
     >
     </Card>
   </section>
-  <h2>{{ status }}</h2>
+
   <button @click="restartGame"></button>
 </template>
 
@@ -65,7 +66,6 @@ export default {
       return result
     }())
 
-    console.log(cardItems)
     cardItems.forEach(item => {
       {
         gameList.value.push({
@@ -119,7 +119,7 @@ export default {
           setTimeout(() => {
             gameList.value[cardOne.position].visible = false
             gameList.value[cardTwo.position].visible = false
-          }, 2000)
+          }, 1000)
 
         }
 
@@ -141,23 +141,32 @@ export default {
 </script>
 
 <style>
+body {
+  background-image: url('/images/background.jpeg');
+  background-repeat: no-repeat;
+  background-size: auto;
+  margin: 0;
+  padding: 0;
+}
+h1, h2 {
+  margin-bottom: 0;
+}
+
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  color: #f103a1;
 }
-
 
 .board {
   justify-content: center;
   margin-top: 5em;
   display: grid;
-  grid-template-columns: repeat(8, 70px);
-  grid-template-rows: repeat(8, 70px);
-  grid-column-gap: 5px;
-  grid-row-gap: 5px;
+  grid-template-columns: repeat(8, 80px);
+  grid-template-rows: repeat(8, 80px);
+  grid-column-gap: 7px;
+  grid-row-gap: 7px;
 }
 </style>
