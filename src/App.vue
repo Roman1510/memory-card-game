@@ -13,7 +13,7 @@
     </Card>
   </section>
 
-  <button @click="restartGame"></button>
+  <button @click="restartGame">Start over!</button>
 </template>
 
 <script>
@@ -162,11 +162,15 @@ h1, h2 {
 
 .board {
   justify-content: center;
-  margin-top: 5em;
+  margin-top: 3em;
   display: grid;
   grid-template-columns: repeat(8, 80px);
   grid-template-rows: repeat(8, 80px);
   grid-column-gap: 7px;
   grid-row-gap: 7px;
 }
+button{
+  margin-top: 20px;
+}
+
 </style>
