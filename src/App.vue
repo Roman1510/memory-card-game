@@ -4,7 +4,9 @@ import Card from "./components/Card";
 import { ref, watch, computed } from "vue";
 import { launchConfetti } from "./utilities/confetti";
 import {Howl} from 'howler';
-import backgroundMusic from './audio/background1.wav'
+import backgroundMusicPath from './audio/background1.wav';
+import chooseMusicPath from './audio/choose.mp3'
+import flipMusicPath from './audio/flip.mp3'
 export default {
   name: "Memory card game",
   components: {
@@ -29,9 +31,10 @@ export default {
     });
 
 
-    var sound = new Howl({
-      src: [backgroundMusic],
+    var backgroundMusic = new Howl({
+      src: [backgroundMusicPath],
       loop:true,
+      volume:0.7,
       onload(){
         console.log('has been loaded')
       },
@@ -39,9 +42,17 @@ export default {
         console.log('some error happened: '+e+" "+msg)
       }
     });
+    var chooseMusic = new Howl({
+      src: [chooseMusicPath],
+      volume:0.8
+    });
+    var flipMusic = new Howl({
+      src: [flipMusicPath],
+      volume:0.8
+    });
     const restartGame = () => {
-      sound.stop()
-      sound.play()
+      backgroundMusic.stop()
+      backgroundMusic.play()
       gameList.value = _.shuffle(gameList.value);
 
       gameList.value = gameList.value.map((card, index) => {
@@ -90,6 +101,7 @@ export default {
     });
 
     const flipCard = (payload) => {
+      chooseMusic.play();
       gameList.value[payload.position].visible = true;
       if (userSelected.value[0]) {
         if (
@@ -123,6 +135,7 @@ export default {
             gameList.value[cardTwo.position].matched = true;
           } else {
             setTimeout(() => {
+              flipMusic.play()
               gameList.value[cardOne.position].visible = false;
               gameList.value[cardTwo.position].visible = false;
             }, 1000);
