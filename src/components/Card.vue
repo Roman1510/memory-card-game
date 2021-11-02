@@ -60,6 +60,7 @@ export default {
   position: relative;
   transition: 0.3s ease;
   transform-style: preserve-3d;
+  cursor: pointer;
 }
 
 .card div {
