@@ -31,22 +31,16 @@ export default {
     });
 
 
-    var backgroundMusic = new Howl({
+    const backgroundMusic = new Howl({
       src: [backgroundMusicPath],
       loop:true,
-      volume:0.7,
-      onload(){
-        console.log('has been loaded')
-      },
-      onloaderror(e,msg){
-        console.log('some error happened: '+e+" "+msg)
-      }
+      volume:0.7
     });
-    var chooseMusic = new Howl({
+    const chooseMusic = new Howl({
       src: [chooseMusicPath],
       volume:0.8
     });
-    var flipMusic = new Howl({
+    const flipMusic = new Howl({
       src: [flipMusicPath],
       volume:0.8
     });
@@ -100,21 +94,24 @@ export default {
       };
     });
 
-    const flipCard = (payload) => {
+    const flipCard = (selected) => {
       chooseMusic.play();
-      gameList.value[payload.position].visible = true;
-      if (userSelected.value[0]) {
-        if (
-          userSelected.value[0].position === payload.position &&
-          userSelected.value[0].faceValue === payload.faceValue
-        ) {
-          return;
+      gameList.value[selected.position].visible = true;
+      if(gameList.value[selected.position].matched===false){
+        if (userSelected.value[0]) {
+          if (
+              userSelected.value[0].position === selected.position &&
+              userSelected.value[0].faceValue === selected.faceValue
+          ) {
+            return;
+          } else {
+            userSelected.value[1] = selected;
+          }
         } else {
-          userSelected.value[1] = payload;
+          userSelected.value[0] = selected;
         }
-      } else {
-        userSelected.value[0] = payload;
       }
+
     };
 
     watch(pairs, (currValue) => {
