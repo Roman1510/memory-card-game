@@ -11,17 +11,6 @@ export default {
     Card,
   },
   setup: function () {
-    var sound = new Howl({
-      src: [backgroundMusic],
-      autoplay: true,
-      onload(){
-        console.log('has been loaded')
-      },
-      onloaderror(e,msg){
-        console.log('some error happened: '+e+" "+msg)
-      }
-    });
-
 
     const gameList = ref([]);
     const userSelected = ref([]);
@@ -40,8 +29,18 @@ export default {
     });
 
 
-
+    var sound = new Howl({
+      src: [backgroundMusic],
+      loop:true,
+      onload(){
+        console.log('has been loaded')
+      },
+      onloaderror(e,msg){
+        console.log('some error happened: '+e+" "+msg)
+      }
+    });
     const restartGame = () => {
+      sound.stop()
       sound.play()
       gameList.value = _.shuffle(gameList.value);
 
@@ -176,7 +175,7 @@ export default {
 
 <style>
 body {
-  background-image: url("/images/background.jpeg");
+  background-image: url("/images/background-wood.jpg");
   background-repeat: no-repeat;
   background-size: auto;
   margin: 0;
