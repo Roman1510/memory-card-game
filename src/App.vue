@@ -7,6 +7,8 @@ import {Howl} from 'howler';
 import backgroundMusicPath from './audio/background1.wav';
 import chooseMusicPath from './audio/choose.mp3'
 import flipMusicPath from './audio/flip.mp3'
+import matchMusicPath from './audio/match.mp3'
+
 export default {
   name: "Memory card game",
   components: {
@@ -42,6 +44,10 @@ export default {
     });
     const flipMusic = new Howl({
       src: [flipMusicPath],
+      volume:0.8
+    });
+    const matchMusic = new Howl({
+      src: [matchMusicPath],
       volume:0.8
     });
     const restartGame = () => {
@@ -128,6 +134,7 @@ export default {
           const cardTwo = currValue[1];
 
           if (cardOne.faceValue === cardTwo.faceValue) {
+            matchMusic.play()
             gameList.value[cardOne.position].matched = true;
             gameList.value[cardTwo.position].matched = true;
           } else {
