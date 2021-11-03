@@ -164,8 +164,6 @@ export default {
 // 1. making the start of the game button
 // 2. cut it into different components
 // 3. make the board adjustable
-// 4. add sounds, and background music
-// 5. add flickering animation when it's complete
 // 6. add responsiveness
 // 7. add timer
 // 8. add score, based on the timer value
