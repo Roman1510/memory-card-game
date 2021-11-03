@@ -1,7 +1,7 @@
 <template>
   <div class="card" @click="selectCard" :class="{'icon-checkmark': matched, 'is-flipped':flippedStyles}">
     <div v-if="visible" class="card-face is-front" :class="{'image-shake':!matched&&visible}">
-      <img :src="`/images/${value}.png`" :alt="value" >
+      <img :src="getImgUrl(value)" :alt="value" >
     </div>
     <div v-else class="card-face is-back">
     </div>
@@ -35,6 +35,10 @@ export default {
   },
   setup(props, context) {
 
+    const getImgUrl = (pic)=> {
+      return require('../assets/images/'+pic+'.png')
+    }
+
     const flippedStyles = computed(() => {
       return props.visible
     })
@@ -47,7 +51,8 @@ export default {
     }
     return {
       selectCard,
-      flippedStyles
+      flippedStyles,
+      getImgUrl
     }
   }
 }
