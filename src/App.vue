@@ -4,10 +4,10 @@ import Card from "./components/Card";
 import { ref, watch, computed } from "vue";
 import { launchConfetti } from "./utilities/confetti";
 import {Howl} from 'howler';
-import backgroundMusicPath from './audio/background1.wav';
-import chooseMusicPath from './audio/choose.mp3'
-import flipMusicPath from './audio/flip.mp3'
-import matchMusicPath from './audio/match.mp3'
+import backgroundMusicPath from './assets/audio/background1.wav';
+import chooseMusicPath from './assets/audio/choose.mp3'
+import flipMusicPath from './assets/audio/flip.mp3'
+import matchMusicPath from './assets/audio/match.mp3'
 
 export default {
   name: "Memory card game",
@@ -190,7 +190,7 @@ export default {
 
 <style>
 body {
-  background-image: url("/images/background-wood.jpg");
+  background-image: url("assets/images/background-wood.jpg");
   background-repeat: no-repeat;
   background-size: auto;
   margin: 0;

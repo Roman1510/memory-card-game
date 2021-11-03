@@ -84,7 +84,7 @@ export default {
 }
 
 .card-face.is-back {
-  background-image: url("/images/enotik.png");
+  background-image: url("../assets/images/enotik.png");
   background-size: 80px;
   color: white;
   transform: rotateY(180deg);
