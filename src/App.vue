@@ -3,11 +3,11 @@ import _ from "lodash";
 import Card from "./components/Card";
 import { ref, watch, computed } from "vue";
 import { launchConfetti } from "./utilities/confetti";
-import {Howl} from 'howler';
-import backgroundMusicPath from './assets/audio/background1.wav';
-import chooseMusicPath from './assets/audio/choose.mp3'
-import flipMusicPath from './assets/audio/flip.mp3'
-import matchMusicPath from './assets/audio/match.mp3'
+import { Howl } from "howler";
+import backgroundMusicPath from "./assets/audio/background1.wav";
+import chooseMusicPath from "./assets/audio/choose.mp3";
+import flipMusicPath from "./assets/audio/flip.mp3";
+import matchMusicPath from "./assets/audio/match.mp3";
 
 export default {
   name: "Memory card game",
@@ -15,9 +15,9 @@ export default {
     Card,
   },
   setup: function () {
-
     const gameList = ref([]);
     const userSelected = ref([]);
+    const filename = ref('play.png')
     const status = computed(() => {
       if (pairs.value === 0) {
         return "player wins";
@@ -31,28 +31,26 @@ export default {
       ).length;
       return cards / 2;
     });
-
-
     const backgroundMusic = new Howl({
       src: [backgroundMusicPath],
-      loop:true,
-      volume:0.7
+      loop: true,
+      volume: 0.7,
     });
     const chooseMusic = new Howl({
       src: [chooseMusicPath],
-      volume:0.8
+      volume: 0.8,
     });
     const flipMusic = new Howl({
       src: [flipMusicPath],
-      volume:0.8
+      volume: 0.8,
     });
     const matchMusic = new Howl({
       src: [matchMusicPath],
-      volume:0.8
+      volume: 0.8,
     });
     const restartGame = () => {
-      backgroundMusic.stop()
-      backgroundMusic.play()
+      backgroundMusic.stop();
+      backgroundMusic.play();
       gameList.value = _.shuffle(gameList.value);
 
       gameList.value = gameList.value.map((card, index) => {
@@ -64,7 +62,6 @@ export default {
         };
       });
     };
-
     const cardItems = (function () {
       let result = [];
       for (let i = 1; i <= 32; i++) {
@@ -72,7 +69,6 @@ export default {
       }
       return result;
     })();
-
     cardItems.forEach((item) => {
       {
         gameList.value.push({
@@ -100,14 +96,27 @@ export default {
       };
     });
 
+    
+
+    
+
+    
+    const change = (value) =>{
+      console.log(filename)
+     filename.value = value
+     console.log(filename)
+    }
+
+
+
     const flipCard = (selected) => {
       chooseMusic.play();
       gameList.value[selected.position].visible = true;
-      if(gameList.value[selected.position].matched===false){
+      if (gameList.value[selected.position].matched === false) {
         if (userSelected.value[0]) {
           if (
-              userSelected.value[0].position === selected.position &&
-              userSelected.value[0].faceValue === selected.faceValue
+            userSelected.value[0].position === selected.position &&
+            userSelected.value[0].faceValue === selected.faceValue
           ) {
             return;
           } else {
@@ -117,7 +126,6 @@ export default {
           userSelected.value[0] = selected;
         }
       }
-
     };
 
     watch(pairs, (currValue) => {
@@ -134,12 +142,12 @@ export default {
           const cardTwo = currValue[1];
 
           if (cardOne.faceValue === cardTwo.faceValue) {
-            matchMusic.play()
+            matchMusic.play();
             gameList.value[cardOne.position].matched = true;
             gameList.value[cardTwo.position].matched = true;
           } else {
             setTimeout(() => {
-              flipMusic.play()
+              flipMusic.play();
               gameList.value[cardOne.position].visible = false;
               gameList.value[cardTwo.position].visible = false;
             }, 1000);
@@ -156,7 +164,9 @@ export default {
       flipCard,
       userSelected,
       status,
-      restartGame
+      restartGame,
+      change,
+      filename
     };
   },
 };
@@ -171,6 +181,7 @@ export default {
 
 <template>
   <h1>Memory cards :)</h1>
+  <img @click="change('play2.png')" class="test" :src="require(`./assets/images/${filename}`)"/>
   <h2>{{ status }}</h2>
   <transition-group tag="section" name="shuffle-animation" class="board">
     <Card
@@ -225,4 +236,11 @@ button {
 .shuffle-animation-move {
   transition: transform 0.7s ease-in;
 }
+
+.test {
+  width: 100px;
+  height:100px;
+}
+
+
 </style>

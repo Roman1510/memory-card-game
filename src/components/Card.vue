@@ -1,13 +1,3 @@
-<template>
-  <div class="card" @click="selectCard" :class="{'icon-checkmark': matched, 'is-flipped':flippedStyles}">
-    <div v-if="visible" class="card-face is-front" :class="{'image-shake':!matched&&visible}">
-      <img :src="getImgUrl(value)" :alt="value" >
-    </div>
-    <div v-else class="card-face is-back">
-    </div>
-  </div>
-</template>
-
 <script>
 
 import {computed} from "vue";
@@ -57,7 +47,15 @@ export default {
   }
 }
 </script>
-
+<template>
+  <div class="card" @click="selectCard" :class="{'icon-checkmark': matched, 'is-flipped':flippedStyles}">
+    <div v-if="visible" class="card-face is-front" :class="{'image-shake':!matched&&visible}">
+      <img :src="getImgUrl(value)" :alt="value" >
+    </div>
+    <div v-else class="card-face is-back">
+    </div>
+  </div>
+</template>
 <style scoped>
 .card {
   border: 1px solid #253f84;
