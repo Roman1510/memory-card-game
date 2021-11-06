@@ -17,7 +17,6 @@ export default {
   setup: function () {
     const gameList = ref([]);
     const userSelected = ref([]);
-    const filename = ref('play.png')
     const status = computed(() => {
       if (pairs.value === 0) {
         return "player wins";
@@ -98,17 +97,6 @@ export default {
 
     
 
-    
-
-    
-    const change = (value) =>{
-      console.log(filename)
-     filename.value = value
-     console.log(filename)
-    }
-
-
-
     const flipCard = (selected) => {
       chooseMusic.play();
       gameList.value[selected.position].visible = true;
@@ -164,9 +152,7 @@ export default {
       flipCard,
       userSelected,
       status,
-      restartGame,
-      change,
-      filename
+      restartGame
     };
   },
 };
@@ -180,8 +166,7 @@ export default {
 </script>
 
 <template>
-  <h1>Memory cards :)</h1>
-  <img @click="change('play2.png')" class="test" :src="require(`./assets/images/${filename}`)"/>
+  <h1>Happy cards</h1>
   <h2>{{ status }}</h2>
   <transition-group tag="section" name="shuffle-animation" class="board">
     <Card
@@ -201,7 +186,7 @@ export default {
 
 <style>
 body {
-  background-image: url("assets/images/background-wood.jpg");
+  background-image: url("assets/images/background-new.png");
   background-repeat: no-repeat;
   background-size: auto;
   margin: 0;
