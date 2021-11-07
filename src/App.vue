@@ -1,13 +1,15 @@
 <script>
-import _ from "lodash";
-import Card from "./components/Card";
 import { ref, watch, computed } from "vue";
+import Card from "./components/Card";
+import _ from "lodash";
 import { launchConfetti } from "./utilities/confetti";
 import { Howl } from "howler";
+import {createBoard} from "./features/createBoard.js"
 import backgroundMusicPath from "./assets/audio/background1.wav";
 import chooseMusicPath from "./assets/audio/choose.mp3";
 import flipMusicPath from "./assets/audio/flip.mp3";
 import matchMusicPath from "./assets/audio/match.mp3";
+
 
 export default {
   name: "Memory card game",
@@ -15,7 +17,7 @@ export default {
     Card,
   },
   setup: function () {
-    const gameList = ref([]);
+    const {gameList} = createBoard()
     const userSelected = ref([]);
     const status = computed(() => {
       if (pairs.value === 0) {
