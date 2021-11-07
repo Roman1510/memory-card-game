@@ -26,7 +26,7 @@ export default {
   setup(props, context) {
 
     const getImgUrl = (pic)=> {
-      return require('../assets/images/'+pic+'.png')
+      return require('../assets/images/cards/'+pic+'.png')
     }
 
     const flippedStyles = computed(() => {
@@ -87,7 +87,7 @@ export default {
 }
 
 .card-face.is-back {
-  background-image: url("../assets/images/enotik.png");
+  background-image: url("../assets/images/card-backs/cardback1.png");
   background-size: 80px;
   color: white;
   transform: rotateY(180deg);

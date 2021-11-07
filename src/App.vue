@@ -186,7 +186,7 @@ export default {
 
 <style>
 body {
-  background-image: url("assets/images/background-new.png");
+  background-image: url("assets/images/backgrounds/background-clouds.png");
   background-repeat: no-repeat;
   background-size: auto;
   margin: 0;
