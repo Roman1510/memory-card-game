@@ -63,39 +63,6 @@ export default {
         };
       });
     };
-    const cardItems = (function () {
-      let result = [];
-      for (let i = 1; i <= 32; i++) {
-        result.push(i);
-      }
-      return result;
-    })();
-    cardItems.forEach((item) => {
-      {
-        gameList.value.push({
-          value: item,
-          visible: false,
-          position: null,
-          matched: false,
-          sort: 1,
-        });
-
-        gameList.value.push({
-          value: item,
-          visible: false,
-          position: null,
-          matched: false,
-          sort: 2,
-        });
-      }
-    });
-
-    gameList.value = gameList.value.map((card, index) => {
-      return {
-        ...card,
-        position: index,
-      };
-    });
 
     
 

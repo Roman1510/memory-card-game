@@ -1,12 +1,7 @@
 import {ref} from 'vue';
+import cardItems from "../data/cards.json";
 const gameList = ref([]);
-const cardItems = (function () {
-    let result = [];
-    for (let i = 1; i <= 32; i++) {
-      result.push(i);
-    }
-    return result;
-  })();
+
 
   const initBoard = (cardsData)=>{
     cardsData.forEach((item) => {
