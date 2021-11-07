@@ -5,6 +5,7 @@ import _ from "lodash";
 import { launchConfetti } from "./utilities/confetti";
 import { Howl } from "howler";
 import {createBoard} from "./features/createBoard.js"
+import cardData from "./data/cards.json";
 import backgroundMusicPath from "./assets/audio/background1.wav";
 import chooseMusicPath from "./assets/audio/choose.mp3";
 import flipMusicPath from "./assets/audio/flip.mp3";
@@ -17,7 +18,7 @@ export default {
     Card,
   },
   setup: function () {
-    const {gameList} = createBoard()
+    const {gameList} = createBoard(cardData)
     const userSelected = ref([]);
     const status = computed(() => {
       if (pairs.value === 0) {

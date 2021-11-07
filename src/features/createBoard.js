@@ -1,5 +1,5 @@
 import {ref} from 'vue';
-import cardItems from "../data/cards.json";
+
 const gameList = ref([]);
 
 
@@ -37,8 +37,8 @@ const gameList = ref([]);
   
 
   
-export function createBoard(){
-    initBoard(cardItems)
+export function createBoard(cardData){
+    initBoard(cardData)
     updateCardPosition()
 
     return {
