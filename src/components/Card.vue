@@ -1,7 +1,6 @@
 <script>
 
 import {computed} from "vue";
-
 export default {
   name: "Card",
   props: {
