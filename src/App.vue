@@ -18,6 +18,7 @@ export default {
     Card,
   },
   setup: function () {
+    const playerNew= ref(false)
     const {gameList} = createBoard(cardData)
     const userSelected = ref([]);
     const status = computed(() => {
@@ -65,7 +66,11 @@ export default {
       });
     };
 
-    
+
+    const startGame = ()=>{
+      playerNew.value = true
+      restartGame()
+    }
 
     const flipCard = (selected) => {
       chooseMusic.play();
@@ -122,7 +127,8 @@ export default {
       flipCard,
       userSelected,
       status,
-      restartGame
+      restartGame,
+      startGame
     };
   },
 };
@@ -138,6 +144,8 @@ export default {
 <template>
   <h1>Happy cards</h1>
   <h2>{{ status }}</h2>
+  <button v-if="playerNew" @click="restartGame">Restart over</button>
+  <button v-else @click="startGame">Start game</button>
   <transition-group tag="section" name="shuffle-animation" class="board">
     <Card
       v-for="card in gameList"
@@ -151,7 +159,7 @@ export default {
     </Card>
   </transition-group>
 
-  <button @click="restartGame">Start over!</button>
+
 </template>
 
 <style>
