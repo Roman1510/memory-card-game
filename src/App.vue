@@ -1,16 +1,15 @@
 <script>
-import { ref, watch, computed } from "vue";
+import { ref, watch } from "vue";
 import Card from "./components/Card";
-import _ from "lodash";
 import { launchConfetti } from "./utilities/confetti";
 import { Howl } from "howler";
-import {createBoard} from "./features/createBoard.js"
+import { createBoard } from "./features/createBoard.js";
+import createGame from "./features/createGame.js";
 import cardData from "./data/cards.json";
 import backgroundMusicPath from "./assets/audio/background1.wav";
 import chooseMusicPath from "./assets/audio/choose.mp3";
 import flipMusicPath from "./assets/audio/flip.mp3";
 import matchMusicPath from "./assets/audio/match.mp3";
-
 
 export default {
   name: "Memory card game",
@@ -18,22 +17,6 @@ export default {
     Card,
   },
   setup: function () {
-    const playerNew= ref(true)
-    const {gameList} = createBoard(cardData)
-    const userSelected = ref([]);
-    const status = computed(() => {
-      if (pairs.value === 0) {
-        return "player wins";
-      } else {
-        return `remaining pairs : ${pairs.value}`;
-      }
-    });
-    const pairs = computed(() => {
-      const cards = gameList.value.filter(
-        (card) => card.matched === false
-      ).length;
-      return cards / 2;
-    });
     const backgroundMusic = new Howl({
       src: [backgroundMusicPath],
       loop: true,
@@ -51,26 +34,13 @@ export default {
       src: [matchMusicPath],
       volume: 0.8,
     });
-    const restartGame = () => {
-      backgroundMusic.stop();
-      backgroundMusic.play();
-      gameList.value = _.shuffle(gameList.value);
 
-      gameList.value = gameList.value.map((card, index) => {
-        return {
-          ...card,
-          matched: false,
-          visible: false,
-          position: index,
-        };
-      });
-    };
-
-
-    const startGame = ()=>{
-      playerNew.value = false
-      restartGame()
-    }
+    const { gameList } = createBoard(cardData);
+    const { playerNew, startGame, restartGame, pairs, status } = createGame(
+      gameList,
+      backgroundMusic
+    );
+    const userSelected = ref([]);
 
     const flipCard = (selected) => {
       chooseMusic.play();
@@ -129,12 +99,11 @@ export default {
       status,
       restartGame,
       startGame,
-      playerNew
+      playerNew,
     };
   },
 };
 
-// 1. making the proper start/restart
 // 2. make the board adjustable
 // 3. add timer
 // 4. add score, based on the timer value
@@ -158,8 +127,6 @@ export default {
     >
     </Card>
   </transition-group>
-
-
 </template>
 
 <style>
@@ -202,8 +169,6 @@ button {
 
 .test {
   width: 100px;
-  height:100px;
+  height: 100px;
 }
-
-
 </style>
