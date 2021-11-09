@@ -104,7 +104,8 @@ export default {
   },
 };
 
-// 2. make the board adjustable
+// 1. make the board adjustable, 
+// 2. information to the left side (floated)
 // 3. add timer
 // 4. add score, based on the timer value
 // 5. add responsiveness
