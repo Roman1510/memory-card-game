@@ -18,7 +18,7 @@ export default {
     Card,
   },
   setup: function () {
-    const playerNew= ref(false)
+    const playerNew= ref(true)
     const {gameList} = createBoard(cardData)
     const userSelected = ref([]);
     const status = computed(() => {
@@ -68,7 +68,7 @@ export default {
 
 
     const startGame = ()=>{
-      playerNew.value = true
+      playerNew.value = false
       restartGame()
     }
 
@@ -128,24 +128,24 @@ export default {
       userSelected,
       status,
       restartGame,
-      startGame
+      startGame,
+      playerNew
     };
   },
 };
 
-// 1. making the start of the game button
-// 2. cut it into different components
-// 3. make the board adjustable
-// 6. add responsiveness
-// 7. add timer
-// 8. add score, based on the timer value
+// 1. making the proper start/restart
+// 2. make the board adjustable
+// 3. add timer
+// 4. add score, based on the timer value
+// 5. add responsiveness
 </script>
 
 <template>
   <h1>Happy cards</h1>
   <h2>{{ status }}</h2>
-  <button v-if="playerNew" @click="restartGame">Restart over</button>
-  <button v-else @click="startGame">Start game</button>
+  <button v-if="playerNew" @click="startGame">Start</button>
+  <button v-else @click="startGame">Restart</button>
   <transition-group tag="section" name="shuffle-animation" class="board">
     <Card
       v-for="card in gameList"
