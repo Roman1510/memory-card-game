@@ -36,15 +36,17 @@ export default {
       volume: 0.8,
     });
 
-    const { gameList } = createBoard(cardData);
-    
+    var { gameList, changeSize } = createBoard(cardData);
     const { playerNew, startGame, restartGame, pairs, status } = createGame(
       gameList,
       backgroundMusic
     );
     const userSelected = ref([]);
 
-
+    const prepareStart = ()=>{ 
+      changeSize(difficulty.value)
+      startGame()
+    }
 
     const flipCard = (selected) => {
       chooseMusic.play();
@@ -104,7 +106,8 @@ export default {
       restartGame,
       startGame,
       playerNew,
-      difficulty
+      difficulty,
+      prepareStart
     };
   },
 };
@@ -120,12 +123,12 @@ export default {
   <h1>Happy cards</h1>
   <h2>{{ status }}</h2>
   <input v-model="difficulty"/>
-  <button v-if="playerNew" @click="startGame()">Start</button>
-  <button v-else @click="startGame()">Restart</button>
+  <button v-if="playerNew" @click="prepareStart">Start</button>
+  <button v-else @click="prepareStart">Restart</button>
   <transition-group tag="section" name="shuffle-animation" class="board">
     <Card
       v-for="card in gameList"
-      :key="`card-${card.value}-${card.sort}`"
+      :key="`card-${card.value}-${card.sort}-${card.size}`"
       :value="String(card.value)"
       :visible="card.visible"
       :position="card.position"

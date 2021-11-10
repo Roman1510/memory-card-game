@@ -103,7 +103,7 @@ export default {
 }
 
 .image-shake{
-  animation: shake 0.4s;
+  animation: shake 0.4s infinite;
   animation-delay:0.3s;
 }
 

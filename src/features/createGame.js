@@ -4,17 +4,15 @@ import _ from "lodash";
 export default function createGame(gameList,backgroundMusic) {
   const playerNew = ref(true);
 
-  const startGame = (size) => {
+  const startGame = () => {
     if(playerNew.value!==false){
       backgroundMusic.stop();
       backgroundMusic.play();
     }
-    console.log(size)
     playerNew.value = false;
-    restartGame(size);
+    restartGame();
   };
-  const restartGame = (size) => {
-    gameList.value = gameList.value.slice(0,size)
+  const restartGame = () => {
     gameList.value = _.shuffle(gameList.value);
 
     gameList.value = gameList.value.map((card, index) => {
