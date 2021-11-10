@@ -23,6 +23,8 @@ const gameList = ref([]);
           });
         }
       });
+
+      
   }
 
   
@@ -37,8 +39,8 @@ const gameList = ref([]);
   
 
   
-export function createBoard(cardData){
-    initBoard(cardData)
+export function createBoard(cardData, size){
+    initBoard(cardData,size)
     updateCardPosition()
 
     return {

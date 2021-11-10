@@ -17,6 +17,7 @@ export default {
     Card,
   },
   setup: function () {
+    const difficulty = ref(64)
     const backgroundMusic = new Howl({
       src: [backgroundMusicPath],
       loop: true,
@@ -36,11 +37,14 @@ export default {
     });
 
     const { gameList } = createBoard(cardData);
+    
     const { playerNew, startGame, restartGame, pairs, status } = createGame(
       gameList,
       backgroundMusic
     );
     const userSelected = ref([]);
+
+
 
     const flipCard = (selected) => {
       chooseMusic.play();
@@ -100,6 +104,7 @@ export default {
       restartGame,
       startGame,
       playerNew,
+      difficulty
     };
   },
 };
@@ -114,8 +119,9 @@ export default {
 <template>
   <h1>Happy cards</h1>
   <h2>{{ status }}</h2>
-  <button v-if="playerNew" @click="startGame">Start</button>
-  <button v-else @click="startGame">Restart</button>
+  <input v-model="difficulty"/>
+  <button v-if="playerNew" @click="startGame()">Start</button>
+  <button v-else @click="startGame()">Restart</button>
   <transition-group tag="section" name="shuffle-animation" class="board">
     <Card
       v-for="card in gameList"
