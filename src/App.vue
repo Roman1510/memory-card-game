@@ -16,7 +16,7 @@ export default {
     Card,
   },
   setup: function () {
-    const difficulty = ref(32)
+    const difficulty = ref(18);
     const backgroundMusic = new Howl({
       src: [backgroundMusicPath],
       loop: true,
@@ -35,17 +35,18 @@ export default {
       volume: 0.8,
     });
 
-    var { gameList,generateBoard } = createBoard();
+    var { gameList, generateBoard } = createBoard();
     const { playerNew, startGame, restartGame, pairs, status } = createGame(
       gameList,
       backgroundMusic
     );
     const userSelected = ref([]);
 
-    const prepareStart = ()=>{ 
-      generateBoard(difficulty.value)
-      startGame()
-    }
+    const prepareStart = (input) => {
+      difficulty.value = input
+      generateBoard(difficulty.value);
+      startGame();
+    };
 
     const flipCard = (selected) => {
       chooseMusic.play();
@@ -111,7 +112,7 @@ export default {
   },
 };
 
-// 1. make the board adjustable, 
+// 1. make the board adjustable,
 // 2. information to the left side (floated)
 // 3. add timer
 // 4. add score, based on the timer value
@@ -121,10 +122,22 @@ export default {
 <template>
   <h1>Happy cards</h1>
   <h2>{{ status }}</h2>
-  <input v-model="difficulty"/>
-  <button v-if="playerNew" @click="prepareStart">Start</button>
-  <button v-else @click="prepareStart">Restart</button>
-  <transition-group tag="section" name="shuffle-animation" class="board">
+  <button v-if="playerNew" @click="prepareStart(32)">hard</button>
+  <button v-if="playerNew" @click="prepareStart(18)">medium</button>
+  <button v-if="playerNew" @click="prepareStart(8)">easy</button>
+  <button v-if="playerNew" @click="prepareStart(2)">easiest</button>
+  <button v-else @click="prepareStart(difficulty)">Restart</button>
+  <transition-group
+    tag="section"
+    name="shuffle-animation"
+    class="board"
+    :class="{
+      hard: difficulty === 32,
+      medium: difficulty === 18,
+      easy: difficulty ===8,
+      easiest: difficulty ===2
+    }"
+  >
     <Card
       v-for="card in gameList"
       :key="`${card.value}-${card.sort}-${card.size}}`"
@@ -158,13 +171,32 @@ h2 {
   text-align: center;
   color: #f103a1;
 }
-
 .board {
   justify-content: center;
   margin-top: 3em;
   display: grid;
+}
+.hard {
   grid-template-columns: repeat(8, 80px);
   grid-template-rows: repeat(8, 80px);
+  grid-column-gap: 7px;
+  grid-row-gap: 7px;
+}
+.medium {
+  grid-template-columns: repeat(6, 80px);
+  grid-template-rows: repeat(6, 80px);
+  grid-column-gap: 7px;
+  grid-row-gap: 7px;
+}
+.easy {
+  grid-template-columns: repeat(4, 80px);
+  grid-template-rows: repeat(4, 80px);
+  grid-column-gap: 7px;
+  grid-row-gap: 7px;
+}
+.easiest {
+  grid-template-columns: repeat(2, 80px);
+  grid-template-rows: repeat(2, 80px);
   grid-column-gap: 7px;
   grid-row-gap: 7px;
 }
