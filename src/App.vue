@@ -147,7 +147,7 @@ export default {
     <Card
       v-for="card in gameList"
       :key="`${card.value}-${card.sort}-${card.size}}`"
-      :value="String(card.value)"
+      :value="card.value"
       :visible="card.visible"
       :position="card.position"
       :matched="card.matched"

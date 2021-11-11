@@ -1,11 +1,11 @@
 import { ref, computed } from "vue";
 import _ from "lodash";
 
-export default function createGame(gameList,backgroundMusic) {
+export default function createGame(gameList, backgroundMusic) {
   const playerNew = ref(true);
 
   const startGame = () => {
-    if(playerNew.value!==false){
+    if (playerNew.value !== false) {
       backgroundMusic.stop();
       backgroundMusic.play();
     }
@@ -32,22 +32,20 @@ export default function createGame(gameList,backgroundMusic) {
     return cards / 2;
   });
 
-
   const status = computed(() => {
-    if (pairs.value === 0) {
+    if (pairs.value === 0 && gameList.value.length > 0) {
       return "player wins";
-    } else {
+    } else if (pairs.value !== 0) {
       return `remaining pairs : ${pairs.value}`;
     }
+    return "";
   });
 
-
   return {
-      playerNew,
-      startGame,
-      restartGame,
-      pairs,
-      status
-  }
-
+    playerNew,
+    startGame,
+    restartGame,
+    pairs,
+    status,
+  };
 }
