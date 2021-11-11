@@ -1,11 +1,17 @@
 import { ref } from "vue";
 import _ from "lodash";
-
+import fullCardsList from "../data/cards.json";
 const gameList = ref([]);
-const cardsDataTemp = ref([]);
-const initBoard = (cardsData, size) => {
-  const cardDataShuffled = _.shuffle(cardsData);
-  cardDataShuffled.forEach((item) => {
+const cardDataShuffled = ref(_.shuffle(fullCardsList));
+
+
+const initBoard = (size) => {
+  console.log(size)
+  if(size){
+    cardDataShuffled.value = cardDataShuffled.value.slice(0,size)
+  }
+  cardDataShuffled.value = cardDataShuffled.value.slice(0,16)
+  cardDataShuffled.value.forEach((item) => {
     {
       gameList.value.push({
         value: item,
@@ -13,7 +19,7 @@ const initBoard = (cardsData, size) => {
         position: null,
         matched: false,
         sort: 1,
-        size: size || 64,
+        size: size || 32,
       });
 
       gameList.value.push({
@@ -22,16 +28,17 @@ const initBoard = (cardsData, size) => {
         position: null,
         matched: false,
         sort: 2,
-        size: size || 64,
+        size: size || 32,
       });
     }
   });
 };
 
-const changeSize = (size) => {
-  console.log(size)
-  console.log(gameList.value)
-};
+const resize =  (size)=>{
+  gameList.value.splice(0)
+  initBoard(size);
+  updateCardPosition();
+}
 
 const updateCardPosition = () => {
   gameList.value = gameList.value.map((card, index) => {
@@ -40,15 +47,14 @@ const updateCardPosition = () => {
       position: index,
     };
   });
-};
+}; 
 
-export function createBoard(cardData) {
-  gameList.value=[]
-  initBoard(cardData);
+export function createBoard() {
+  gameList.value.splice(0)
+  initBoard();
   updateCardPosition();
-  cardsDataTemp.value = JSON.parse(JSON.stringify(cardData));
   return {
     gameList,
-    changeSize,
+    resize
   };
 }

@@ -5,7 +5,6 @@ import { launchConfetti } from "./utilities/confetti";
 import { Howl } from "howler";
 import { createBoard } from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
-import cardData from "./data/cards.json";
 import backgroundMusicPath from "./assets/audio/background1.wav";
 import chooseMusicPath from "./assets/audio/choose.mp3";
 import flipMusicPath from "./assets/audio/flip.mp3";
@@ -17,7 +16,7 @@ export default {
     Card,
   },
   setup: function () {
-    const difficulty = ref(64)
+    const difficulty = ref(32)
     const backgroundMusic = new Howl({
       src: [backgroundMusicPath],
       loop: true,
@@ -36,7 +35,7 @@ export default {
       volume: 0.8,
     });
 
-    var { gameList, changeSize } = createBoard(cardData);
+    var { gameList,resize } = createBoard();
     const { playerNew, startGame, restartGame, pairs, status } = createGame(
       gameList,
       backgroundMusic
@@ -44,8 +43,9 @@ export default {
     const userSelected = ref([]);
 
     const prepareStart = ()=>{ 
-      changeSize(difficulty.value)
+      resize(difficulty.value)
       startGame()
+      
     }
 
     const flipCard = (selected) => {
@@ -128,7 +128,7 @@ export default {
   <transition-group tag="section" name="shuffle-animation" class="board">
     <Card
       v-for="card in gameList"
-      :key="`card-${card.value}-${card.sort}-${card.size}`"
+      :key="`${card.value}-${card.sort}-${card.size}}`"
       :value="String(card.value)"
       :visible="card.visible"
       :position="card.position"
