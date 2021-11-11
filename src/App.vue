@@ -1,7 +1,7 @@
 <script>
 import { ref, watch } from "vue";
 import Card from "./components/Card";
-import { launchConfetti } from "./utilities/confetti";
+import { confettiStart, confettiStop } from "./utilities/confetti";
 import { Howl } from "howler";
 import { createBoard } from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
@@ -43,9 +43,10 @@ export default {
     const userSelected = ref([]);
 
     const prepareStart = (input) => {
-      difficulty.value = input
+      difficulty.value = input;
       generateBoard(difficulty.value);
       startGame();
+      confettiStop();
     };
 
     const flipCard = (selected) => {
@@ -69,7 +70,7 @@ export default {
 
     watch(pairs, (currValue) => {
       if (currValue === 0) {
-        launchConfetti();
+        confettiStart();
       }
     });
 
@@ -107,7 +108,7 @@ export default {
       startGame,
       playerNew,
       difficulty,
-      prepareStart
+      prepareStart,
     };
   },
 };
@@ -134,8 +135,8 @@ export default {
     :class="{
       hard: difficulty === 32,
       medium: difficulty === 18,
-      easy: difficulty ===8,
-      easiest: difficulty ===2
+      easy: difficulty === 8,
+      easiest: difficulty === 2,
     }"
   >
     <Card
