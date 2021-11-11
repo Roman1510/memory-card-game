@@ -9,7 +9,7 @@ import backgroundMusicPath from "./assets/audio/background1.wav";
 import chooseMusicPath from "./assets/audio/choose.mp3";
 import flipMusicPath from "./assets/audio/flip.mp3";
 import matchMusicPath from "./assets/audio/match.mp3";
-
+import restartImage from "./assets/images/buttons/restart/restart.png";
 export default {
   name: "Memory card game",
   components: {
@@ -109,11 +109,11 @@ export default {
       playerNew,
       difficulty,
       prepareStart,
+      restartImage,
     };
   },
 };
-
-// 1. make the board adjustable,
+// 1. add feature to actually restart game, with the choice
 // 2. information to the left side (floated)
 // 3. add timer
 // 4. add score, based on the timer value
@@ -127,7 +127,12 @@ export default {
   <button v-if="playerNew" @click="prepareStart(18)">medium</button>
   <button v-if="playerNew" @click="prepareStart(8)">easy</button>
   <button v-if="playerNew" @click="prepareStart(2)">easiest</button>
-  <button v-else @click="prepareStart(difficulty)">Restart</button>
+  <img
+    v-else
+    class="button"
+    :src="restartImage"
+    @click="prepareStart(difficulty)"
+  />
   <transition-group
     tag="section"
     name="shuffle-animation"
@@ -203,6 +208,10 @@ h2 {
 }
 button {
   margin-top: 20px;
+}
+.button {
+  margin-top: 20px;
+  height: 30px;
 }
 
 .shuffle-animation-move {
