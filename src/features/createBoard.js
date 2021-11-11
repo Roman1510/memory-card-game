@@ -5,12 +5,12 @@ const gameList = ref([]);
 const cardDataShuffled = ref(_.shuffle(fullCardsList));
 
 
-const initBoard = (size) => {
+const fillBoard = (size) => {
   console.log(size)
   if(size){
     cardDataShuffled.value = cardDataShuffled.value.slice(0,size)
   }
-  cardDataShuffled.value = cardDataShuffled.value.slice(0,16)
+  cardDataShuffled.value = cardDataShuffled.value.slice(0,32)
   cardDataShuffled.value.forEach((item) => {
     {
       gameList.value.push({
@@ -34,9 +34,9 @@ const initBoard = (size) => {
   });
 };
 
-const resize =  (size)=>{
+const generateBoard =  (size)=>{
   gameList.value.splice(0)
-  initBoard(size);
+  fillBoard(size);
   updateCardPosition();
 }
 
@@ -50,11 +50,9 @@ const updateCardPosition = () => {
 }; 
 
 export function createBoard() {
-  gameList.value.splice(0)
-  initBoard();
-  updateCardPosition();
+
   return {
     gameList,
-    resize
+    generateBoard
   };
 }

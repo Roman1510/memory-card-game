@@ -35,7 +35,7 @@ export default {
       volume: 0.8,
     });
 
-    var { gameList,resize } = createBoard();
+    var { gameList,generateBoard } = createBoard();
     const { playerNew, startGame, restartGame, pairs, status } = createGame(
       gameList,
       backgroundMusic
@@ -43,9 +43,8 @@ export default {
     const userSelected = ref([]);
 
     const prepareStart = ()=>{ 
-      resize(difficulty.value)
+      generateBoard(difficulty.value)
       startGame()
-      
     }
 
     const flipCard = (selected) => {
