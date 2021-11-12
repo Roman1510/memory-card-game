@@ -10,6 +10,7 @@ import chooseMusicPath from "./assets/audio/choose.mp3";
 import flipMusicPath from "./assets/audio/flip.mp3";
 import matchMusicPath from "./assets/audio/match.mp3";
 import restartImage from "./assets/images/buttons/restart/restart.png";
+import restartImagePressed from "./assets/images/buttons/restart/restart-pressed.png";
 export default {
   name: "Memory card game",
   components: {
@@ -36,7 +37,7 @@ export default {
     });
 
     var { gameList, generateBoard } = createBoard();
-    const { playerNew, startGame, restartGame, pairs, status } = createGame(
+    const { playerNew, startGame, pairs, status } = createGame(
       gameList,
       backgroundMusic
     );
@@ -46,6 +47,10 @@ export default {
       difficulty.value = input;
       generateBoard(difficulty.value);
       startGame();
+      confettiStop();
+    };
+
+    const prepareRestart = () => {
       confettiStop();
     };
 
@@ -104,12 +109,13 @@ export default {
       flipCard,
       userSelected,
       status,
-      restartGame,
       startGame,
       playerNew,
       difficulty,
       prepareStart,
       restartImage,
+      restartImagePressed,
+      prepareRestart
     };
   },
 };
@@ -132,6 +138,11 @@ export default {
     class="button"
     :src="restartImage"
     @click="prepareStart(difficulty)"
+  />
+  <img
+    class="button"
+    :src="restartImagePressed"
+    @click="prepareRestart()"
   />
   <transition-group
     tag="section"

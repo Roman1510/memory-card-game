@@ -10,11 +10,7 @@ export default function createGame(gameList, backgroundMusic) {
       backgroundMusic.play();
     }
     playerNew.value = false;
-    restartGame();
-  };
-  const restartGame = () => {
     gameList.value = _.shuffle(gameList.value);
-
     gameList.value = gameList.value.map((card, index) => {
       return {
         ...card,
@@ -44,7 +40,6 @@ export default function createGame(gameList, backgroundMusic) {
   return {
     playerNew,
     startGame,
-    restartGame,
     pairs,
     status,
   };
