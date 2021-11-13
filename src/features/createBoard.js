@@ -5,7 +5,6 @@ const gameList = ref([]);
 const cardDataShuffled = ref(_.shuffle(fullCardsList));
 
 const fillBoard = (size) => {
-  console.log(size);
   if (size) {
     cardDataShuffled.value = cardDataShuffled.value.slice(0, size);
   }
@@ -33,7 +32,7 @@ const fillBoard = (size) => {
   });
 };
 
-const generateBoard = (size) => {
+export const generateBoard = (size) => {
   if (size === 0) {
     gameList.value.splice(0);
     updateCardPosition();
@@ -53,8 +52,5 @@ const updateCardPosition = () => {
 };
 
 export function createBoard() {
-  return {
-    gameList,
-    generateBoard,
-  };
+  return gameList
 }

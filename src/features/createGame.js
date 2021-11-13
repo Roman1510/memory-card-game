@@ -1,11 +1,13 @@
 import { ref, computed } from "vue";
 import _ from "lodash";
+import { generateBoard } from "./createBoard";
 
 export default function createGame(gameList) {
   const playerNew = ref(true);
 
-  const startGame = () => {
-    
+  const startGame = (size) => {
+
+    generateBoard(size)
     playerNew.value = false;
     gameList.value = _.shuffle(gameList.value);
     gameList.value = gameList.value.map((card, index) => {
@@ -17,6 +19,10 @@ export default function createGame(gameList) {
       };
     });
   };
+
+  const restartGame = ()=>{
+
+  }
 
   const pairs = computed(() => {
     const cards = gameList.value.filter(
@@ -37,6 +43,7 @@ export default function createGame(gameList) {
   return {
     playerNew,
     startGame,
+    restartGame,
     pairs,
     status,
   };

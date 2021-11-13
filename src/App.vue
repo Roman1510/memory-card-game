@@ -19,9 +19,9 @@ export default {
     Card,
   },
   setup: function () {
-    const difficulty = ref(18);
+    const difficulty = ref(0);
 
-    var { gameList, generateBoard } = createBoard();
+    var gameList  = createBoard();
     const { playerNew, startGame, pairs, status } = createGame(
       gameList,
       backgroundMusic
@@ -34,8 +34,7 @@ export default {
         backgroundMusic.play();
       }
       difficulty.value = input;
-      generateBoard(difficulty.value);
-      startGame();
+      startGame(difficulty.value);
       confettiStop();
     };
 
