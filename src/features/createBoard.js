@@ -4,13 +4,12 @@ import fullCardsList from "../data/cards.json";
 const gameList = ref([]);
 const cardDataShuffled = ref(_.shuffle(fullCardsList));
 
-
 const fillBoard = (size) => {
-  console.log(size)
-  if(size){
-    cardDataShuffled.value = cardDataShuffled.value.slice(0,size)
+  console.log(size);
+  if (size) {
+    cardDataShuffled.value = cardDataShuffled.value.slice(0, size);
   }
-  cardDataShuffled.value = cardDataShuffled.value.slice(0,32)
+  cardDataShuffled.value = cardDataShuffled.value.slice(0, 32);
   cardDataShuffled.value.forEach((item) => {
     {
       gameList.value.push({
@@ -34,11 +33,15 @@ const fillBoard = (size) => {
   });
 };
 
-const generateBoard =  (size)=>{
-  gameList.value.splice(0)
+const generateBoard = (size) => {
+  if (size === 0) {
+    gameList.value.splice(0);
+    updateCardPosition();
+  }
+  gameList.value.splice(0);
   fillBoard(size);
   updateCardPosition();
-}
+};
 
 const updateCardPosition = () => {
   gameList.value = gameList.value.map((card, index) => {
@@ -47,12 +50,11 @@ const updateCardPosition = () => {
       position: index,
     };
   });
-}; 
+};
 
 export function createBoard() {
-
   return {
     gameList,
-    generateBoard
+    generateBoard,
   };
 }

@@ -51,6 +51,9 @@ export default {
     };
 
     const prepareRestart = () => {
+      playerNew.value=true 
+      gameList.value = []
+      // restartGame();
       confettiStop();
     };
 
@@ -119,7 +122,7 @@ export default {
     };
   },
 };
-// 1. add feature to actually restart game, with the choice
+// 1. refactor the logic of game, so that the start/restart can be initiated
 // 2. information to the left side (floated)
 // 3. add timer
 // 4. add score, based on the timer value
