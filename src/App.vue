@@ -2,15 +2,12 @@
 import { ref, watch } from "vue";
 import Card from "./components/Card";
 import { confettiStart, confettiStop } from "./utilities/confetti";
-import { Howl } from "howler";
 import { createBoard } from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
-import backgroundMusicPath from "./assets/audio/background1.wav";
-import chooseMusicPath from "./assets/audio/choose.mp3";
-import flipMusicPath from "./assets/audio/flip.mp3";
-import matchMusicPath from "./assets/audio/match.mp3";
 import restartImage from "./assets/images/buttons/restart/restart.png";
 import restartImagePressed from "./assets/images/buttons/restart/restart-pressed.png";
+import {backgroundMusic, chooseMusic, flipMusic, matchMusic } from "./features/gameMusic.js";
+
 export default {
   name: "Memory card game",
   components: {
@@ -18,23 +15,7 @@ export default {
   },
   setup: function () {
     const difficulty = ref(18);
-    const backgroundMusic = new Howl({
-      src: [backgroundMusicPath],
-      loop: true,
-      volume: 0.7,
-    });
-    const chooseMusic = new Howl({
-      src: [chooseMusicPath],
-      volume: 0.8,
-    });
-    const flipMusic = new Howl({
-      src: [flipMusicPath],
-      volume: 0.8,
-    });
-    const matchMusic = new Howl({
-      src: [matchMusicPath],
-      volume: 0.8,
-    });
+    
 
     var { gameList, generateBoard } = createBoard();
     const { playerNew, startGame, pairs, status } = createGame(
