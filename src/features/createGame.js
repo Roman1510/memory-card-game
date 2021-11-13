@@ -1,14 +1,11 @@
 import { ref, computed } from "vue";
 import _ from "lodash";
 
-export default function createGame(gameList, backgroundMusic) {
+export default function createGame(gameList) {
   const playerNew = ref(true);
 
   const startGame = () => {
-    if (playerNew.value !== false) {
-      backgroundMusic.stop();
-      backgroundMusic.play();
-    }
+    
     playerNew.value = false;
     gameList.value = _.shuffle(gameList.value);
     gameList.value = gameList.value.map((card, index) => {

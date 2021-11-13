@@ -6,7 +6,12 @@ import { createBoard } from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
 import restartImage from "./assets/images/buttons/restart/restart.png";
 import restartImagePressed from "./assets/images/buttons/restart/restart-pressed.png";
-import {backgroundMusic, chooseMusic, flipMusic, matchMusic } from "./features/gameMusic.js";
+import {
+  backgroundMusic,
+  chooseMusic,
+  flipMusic,
+  matchMusic,
+} from "./features/gameMusic.js";
 
 export default {
   name: "Memory card game",
@@ -15,7 +20,6 @@ export default {
   },
   setup: function () {
     const difficulty = ref(18);
-    
 
     var { gameList, generateBoard } = createBoard();
     const { playerNew, startGame, pairs, status } = createGame(
@@ -25,6 +29,10 @@ export default {
     const userSelected = ref([]);
 
     const prepareStart = (input) => {
+      if (playerNew.value !== false) {
+        backgroundMusic.stop();
+        backgroundMusic.play();
+      }
       difficulty.value = input;
       generateBoard(difficulty.value);
       startGame();
@@ -32,10 +40,7 @@ export default {
     };
 
     const prepareRestart = () => {
-      playerNew.value=true 
-      gameList.value = []
-      // restartGame();
-      confettiStop();
+      // new logic should be created here
     };
 
     const flipCard = (selected) => {
@@ -99,7 +104,7 @@ export default {
       prepareStart,
       restartImage,
       restartImagePressed,
-      prepareRestart
+      prepareRestart,
     };
   },
 };
@@ -123,11 +128,7 @@ export default {
     :src="restartImage"
     @click="prepareStart(difficulty)"
   />
-  <img
-    class="button"
-    :src="restartImagePressed"
-    @click="prepareRestart()"
-  />
+  <img class="button" :src="restartImagePressed" @click="prepareRestart()" />
   <transition-group
     tag="section"
     name="shuffle-animation"
