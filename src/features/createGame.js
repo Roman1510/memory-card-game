@@ -21,7 +21,8 @@ export default function createGame(gameList) {
   };
 
   const restartGame = ()=>{
-
+    gameList.value.splice(0)
+    playerNew.value = true;
   }
 
   const pairs = computed(() => {

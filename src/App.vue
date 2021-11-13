@@ -20,9 +20,9 @@ export default {
   },
   setup: function () {
     const difficulty = ref(0);
+    var gameList = createBoard();
 
-    var gameList  = createBoard();
-    const { playerNew, startGame, pairs, status } = createGame(
+    const { playerNew, startGame, restartGame, pairs, status } = createGame(
       gameList,
       backgroundMusic
     );
@@ -39,7 +39,8 @@ export default {
     };
 
     const prepareRestart = () => {
-      // new logic should be created here
+      restartGame();
+      confettiStop();
     };
 
     const flipCard = (selected) => {
