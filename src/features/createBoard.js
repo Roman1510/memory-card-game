@@ -36,10 +36,12 @@ export const generateBoard = (size) => {
   if (size === 0) {
     gameList.value.splice(0);
     updateCardPosition();
+    return gameList
   }
   gameList.value.splice(0);
   fillBoard(size);
   updateCardPosition();
+  return gameList
 };
 
 const updateCardPosition = () => {

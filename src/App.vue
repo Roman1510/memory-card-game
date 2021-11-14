@@ -108,7 +108,7 @@ export default {
     };
   },
 };
-// 1. refactor the logic of game, so that the start/restart can be initiated
+// 1. refactor creategame/createBoard => logic doesn't make any sense
 // 2. information to the left side (floated)
 // 3. add timer
 // 4. add score, based on the timer value
