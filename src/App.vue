@@ -20,11 +20,10 @@ export default {
   },
   setup: function () {
     const difficulty = ref(0);
-    var gameList = createBoard();
+    let gameList = createBoard();
 
     const { playerNew, startGame, restartGame, pairs, status } = createGame(
-      gameList,
-      backgroundMusic
+      gameList
     );
     const userSelected = ref([]);
 
@@ -41,6 +40,7 @@ export default {
     const prepareRestart = () => {
       restartGame();
       confettiStop();
+      gameList = createBoard()
     };
 
     const flipCard = (selected) => {
