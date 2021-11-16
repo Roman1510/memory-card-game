@@ -6,7 +6,6 @@ export default function createGame(gameList) {
   const playerNew = ref(true);
 
   const startGame = (size) => {
-
     generateBoard(size)
     playerNew.value = false;
     gameList.value = _.shuffle(gameList.value);
@@ -18,6 +17,7 @@ export default function createGame(gameList) {
         position: index,
       };
     });
+
   };
 
   const restartGame = ()=>{

@@ -21,7 +21,7 @@ export default {
   setup: function () {
     const difficulty = ref(0);
     let gameList = ref(createBoard());
-
+    window.gameList = gameList.value
     let {playerNew, startGame, pairs, status} = createGame(
         gameList
     );
@@ -39,6 +39,7 @@ export default {
 
     const prepareRestart = () => {
       generateBoard(0)
+      //here the gamelist.value should be reinitialized somehow
       gameList.value = []
       playerNew.value = true
     };
