@@ -2,7 +2,7 @@
 import {ref, watch} from "vue";
 import Card from "./components/Card";
 import {confettiStart, confettiStop} from "./utilities/confetti";
-import {createBoard,generateBoard} from "./features/createBoard.js";
+import {getGameList,generateBoard} from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
 import restartImage from "./assets/images/buttons/restart/restart.png";
 import restartImagePressed from "./assets/images/buttons/restart/restart-pressed.png";
@@ -20,7 +20,7 @@ export default {
   },
   setup: function () {
     const difficulty = ref(0);
-    let gameList = ref(createBoard());
+    let gameList = ref(getGameList());
     window.gameList = gameList.value
     let {playerNew, startGame, pairs, status} = createGame(
         gameList
@@ -38,8 +38,9 @@ export default {
     };
 
     const prepareRestart = () => {
+      console.log(getGameList())
       generateBoard(0)
-      //here the gamelist.value should be reinitialized somehow
+      console.log(getGameList())
       gameList.value = []
       playerNew.value = true
     };
@@ -109,7 +110,10 @@ export default {
     };
   },
 };
-// 1. refactor creategame/createBoard => logic doesn't make any sense
+// 1. refactor creategame/createBoard =>
+// generateBoard, getBoard should be used only in a component, the js files should be fully encapsulated
+
+
 // 2. information to the left side (floated)
 // 3. add timer
 // 4. add score, based on the timer value
