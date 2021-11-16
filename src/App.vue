@@ -23,7 +23,7 @@ export default {
     let gameList = ref(getGameList());
     window.gameList = gameList.value
     let {playerNew, startGame, pairs, status} = createGame(
-        gameList
+        gameList //should this be computed?
     );
     const userSelected = ref([]);
 
@@ -33,16 +33,16 @@ export default {
         backgroundMusic.play();
       }
       difficulty.value = input;
+      generateBoard(difficulty.value)
       startGame(difficulty.value);
       confettiStop();
     };
 
     const prepareRestart = () => {
-      console.log(getGameList())
+      difficulty.value = 0
       generateBoard(0)
-      console.log(getGameList())
       gameList.value = []
-      playerNew.value = true
+      playerNew.value = true;
     };
 
     const flipCard = (selected) => {

@@ -28,6 +28,14 @@ const fillBoard = (size) => {
     }
   });
 };
+const updateCardPosition = () => {
+  gameList = gameList.map((card, index) => {
+    return {
+      ...card,
+      position: index,
+    };
+  });
+};
 
 export const generateBoard = (size) => {
   if (size === 0) {
@@ -41,15 +49,6 @@ export const generateBoard = (size) => {
   return gameList
 };
 
-const updateCardPosition = () => {
-  gameList = gameList.map((card, index) => {
-    return {
-      ...card,
-      position: index,
-    };
-  });
-};
-
-export function getGameList() {
+export const getGameList = () =>{
   return gameList
 }

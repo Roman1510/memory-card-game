@@ -6,6 +6,7 @@ export default function createGame(gameList) {
   const playerNew = ref(true);
 
   const startGame = (size) => {
+    console.log(size)
     generateBoard(size)
     playerNew.value = false;
     gameList.value = _.shuffle(gameList.value);
@@ -23,6 +24,15 @@ export default function createGame(gameList) {
   const restartGame = ()=>{
     gameList.value.splice(0)
     playerNew.value = true;
+    gameList.value = _.shuffle(gameList.value);
+    gameList.value = gameList.value.map((card, index) => {
+      return {
+        ...card,
+        matched: false,
+        visible: false,
+        position: index,
+      };
+    });
   }
 
   const pairs = computed(() => {
