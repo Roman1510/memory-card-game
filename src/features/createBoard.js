@@ -4,10 +4,9 @@ let gameList = [];
 let cardDataShuffled = _.shuffle(fullCardsList);
 
 const fillBoard = (size) => {
-  if (size) {
-    cardDataShuffled = cardDataShuffled.slice(0, size);
-  }
-  cardDataShuffled = cardDataShuffled.slice(0, 32);
+
+  cardDataShuffled = _.shuffle(fullCardsList).slice(0, size);
+  console.log(cardDataShuffled)
   cardDataShuffled.forEach((item) => {
     {
       gameList.push({

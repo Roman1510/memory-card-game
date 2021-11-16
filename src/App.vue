@@ -2,7 +2,7 @@
 import {ref, watch} from "vue";
 import Card from "./components/Card";
 import {confettiStart, confettiStop} from "./utilities/confetti";
-import {createBoard} from "./features/createBoard.js";
+import {createBoard,generateBoard} from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
 import restartImage from "./assets/images/buttons/restart/restart.png";
 import restartImagePressed from "./assets/images/buttons/restart/restart-pressed.png";
@@ -33,13 +33,14 @@ export default {
         backgroundMusic.play();
       }
       difficulty.value = input;
-
       startGame(difficulty.value);
       confettiStop();
     };
 
     const prepareRestart = () => {
-
+      generateBoard(0)
+      gameList.value = []
+      playerNew.value = true
     };
 
     const flipCard = (selected) => {
