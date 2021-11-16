@@ -1,8 +1,8 @@
 <script>
-import { ref, watch } from "vue";
+import {ref, watch} from "vue";
 import Card from "./components/Card";
-import { confettiStart, confettiStop } from "./utilities/confetti";
-import { createBoard } from "./features/createBoard.js";
+import {confettiStart, confettiStop} from "./utilities/confetti";
+import {createBoard} from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
 import restartImage from "./assets/images/buttons/restart/restart.png";
 import restartImagePressed from "./assets/images/buttons/restart/restart-pressed.png";
@@ -20,10 +20,10 @@ export default {
   },
   setup: function () {
     const difficulty = ref(0);
-    let gameList = createBoard();
+    let gameList = ref(createBoard());
 
-    const { playerNew, startGame, restartGame, pairs, status } = createGame(
-      gameList
+    let {playerNew, startGame, pairs, status} = createGame(
+        gameList
     );
     const userSelected = ref([]);
 
@@ -33,14 +33,13 @@ export default {
         backgroundMusic.play();
       }
       difficulty.value = input;
+
       startGame(difficulty.value);
       confettiStop();
     };
 
     const prepareRestart = () => {
-      restartGame();
-      confettiStop();
-      gameList = createBoard()
+
     };
 
     const flipCard = (selected) => {
@@ -49,8 +48,8 @@ export default {
       if (gameList.value[selected.position].matched === false) {
         if (userSelected.value[0]) {
           if (
-            userSelected.value[0].position === selected.position &&
-            userSelected.value[0].faceValue === selected.faceValue
+              userSelected.value[0].position === selected.position &&
+              userSelected.value[0].faceValue === selected.faceValue
           ) {
             return;
           } else {
@@ -69,28 +68,28 @@ export default {
     });
 
     watch(
-      userSelected,
-      (currValue) => {
-        if (currValue.length === 2) {
-          const cardOne = currValue[0];
-          const cardTwo = currValue[1];
+        userSelected,
+        (currValue) => {
+          if (currValue.length === 2) {
+            const cardOne = currValue[0];
+            const cardTwo = currValue[1];
 
-          if (cardOne.faceValue === cardTwo.faceValue) {
-            matchMusic.play();
-            gameList.value[cardOne.position].matched = true;
-            gameList.value[cardTwo.position].matched = true;
-          } else {
-            setTimeout(() => {
-              flipMusic.play();
-              gameList.value[cardOne.position].visible = false;
-              gameList.value[cardTwo.position].visible = false;
-            }, 1000);
+            if (cardOne.faceValue === cardTwo.faceValue) {
+              matchMusic.play();
+              gameList.value[cardOne.position].matched = true;
+              gameList.value[cardTwo.position].matched = true;
+            } else {
+              setTimeout(() => {
+                flipMusic.play();
+                gameList.value[cardOne.position].visible = false;
+                gameList.value[cardTwo.position].visible = false;
+              }, 1000);
+            }
+
+            userSelected.value.length = 0;
           }
-
-          userSelected.value.length = 0;
-        }
-      },
-      { deep: true }
+        },
+        {deep: true}
     );
 
     return {
@@ -123,17 +122,17 @@ export default {
   <button v-if="playerNew" @click="prepareStart(8)">easy</button>
   <button v-if="playerNew" @click="prepareStart(2)">easiest</button>
   <img
-    v-else
-    class="button"
-    :src="restartImage"
-    @click="prepareStart(difficulty)"
+      v-else
+      class="button"
+      :src="restartImage"
+      @click="prepareStart(difficulty)"
   />
-  <img class="button" :src="restartImagePressed" @click="prepareRestart()" />
+  <img class="button" :src="restartImagePressed" @click="prepareRestart()"/>
   <transition-group
-    tag="section"
-    name="shuffle-animation"
-    class="board"
-    :class="{
+      tag="section"
+      name="shuffle-animation"
+      class="board"
+      :class="{
       hard: difficulty === 32,
       medium: difficulty === 18,
       easy: difficulty === 8,
@@ -141,13 +140,13 @@ export default {
     }"
   >
     <Card
-      v-for="card in gameList"
-      :key="`${card.value}-${card.sort}-${card.size}}`"
-      :value="card.value"
-      :visible="card.visible"
-      :position="card.position"
-      :matched="card.matched"
-      @select-card="flipCard"
+        v-for="card in gameList"
+        :key="`${card.value}-${card.sort}-${card.size}}`"
+        :value="card.value"
+        :visible="card.visible"
+        :position="card.position"
+        :matched="card.matched"
+        @select-card="flipCard"
     >
     </Card>
   </transition-group>
@@ -161,6 +160,7 @@ body {
   margin: 0;
   padding: 0;
 }
+
 h1,
 h2 {
   margin-bottom: 0;
@@ -173,38 +173,45 @@ h2 {
   text-align: center;
   color: #f103a1;
 }
+
 .board {
   justify-content: center;
   margin-top: 3em;
   display: grid;
 }
+
 .hard {
   grid-template-columns: repeat(8, 80px);
   grid-template-rows: repeat(8, 80px);
   grid-column-gap: 7px;
   grid-row-gap: 7px;
 }
+
 .medium {
   grid-template-columns: repeat(6, 80px);
   grid-template-rows: repeat(6, 80px);
   grid-column-gap: 7px;
   grid-row-gap: 7px;
 }
+
 .easy {
   grid-template-columns: repeat(4, 80px);
   grid-template-rows: repeat(4, 80px);
   grid-column-gap: 7px;
   grid-row-gap: 7px;
 }
+
 .easiest {
   grid-template-columns: repeat(2, 80px);
   grid-template-rows: repeat(2, 80px);
   grid-column-gap: 7px;
   grid-row-gap: 7px;
 }
+
 button {
   margin-top: 20px;
 }
+
 .button {
   margin-top: 20px;
   height: 30px;

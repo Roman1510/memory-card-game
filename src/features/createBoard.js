@@ -1,17 +1,16 @@
-import { ref } from "vue";
 import _ from "lodash";
 import fullCardsList from "../data/cards.json";
-const gameList = ref([]);
-const cardDataShuffled = ref(_.shuffle(fullCardsList));
+let gameList = [];
+let cardDataShuffled = _.shuffle(fullCardsList);
 
 const fillBoard = (size) => {
   if (size) {
-    cardDataShuffled.value = cardDataShuffled.value.slice(0, size);
+    cardDataShuffled = cardDataShuffled.slice(0, size);
   }
-  cardDataShuffled.value = cardDataShuffled.value.slice(0, 32);
-  cardDataShuffled.value.forEach((item) => {
+  cardDataShuffled = cardDataShuffled.slice(0, 32);
+  cardDataShuffled.forEach((item) => {
     {
-      gameList.value.push({
+      gameList.push({
         value: item,
         visible: false,
         position: null,
@@ -20,7 +19,7 @@ const fillBoard = (size) => {
         size: size || 32,
       });
 
-      gameList.value.push({
+      gameList.push({
         value: item,
         visible: false,
         position: null,
@@ -34,18 +33,18 @@ const fillBoard = (size) => {
 
 export const generateBoard = (size) => {
   if (size === 0) {
-    gameList.value.splice(0);
+    gameList.splice(0);
     updateCardPosition();
     return gameList
   }
-  gameList.value.splice(0);
+  gameList.splice(0);
   fillBoard(size);
   updateCardPosition();
   return gameList
 };
 
 const updateCardPosition = () => {
-  gameList.value = gameList.value.map((card, index) => {
+  gameList = gameList.map((card, index) => {
     return {
       ...card,
       position: index,
