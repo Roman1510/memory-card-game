@@ -22,14 +22,14 @@ export default function createGame(gameList) {
 
     };
 
-    const restartGame = () => {
+    const resetGame = () => {
         //this is the logic to return to the main menu
         gameList.value.splice(0)
         playerNew.value = true;
     }
 
     const pairs = computed(() => {
-        const cards = gameList.value.filter(
+            const cards = gameList.value.filter(
             (card) => card.matched === false
         ).length;
         return cards / 2;
@@ -47,7 +47,7 @@ export default function createGame(gameList) {
     return {
         playerNew,
         startGame,
-        restartGame,
+        resetGame,
         pairs,
         status,
     };

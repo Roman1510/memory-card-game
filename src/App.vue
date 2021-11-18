@@ -22,7 +22,7 @@ export default {
     const difficulty = ref(0);
     let gameList = ref(getGameList());
     window.gameList = gameList.value
-    let {playerNew, startGame, pairs, status,restartGame} = createGame(
+    let {playerNew, startGame, pairs, status,resetGame} = createGame(
         gameList //should this be computed?
     );
     const userSelected = ref([]);
@@ -37,8 +37,8 @@ export default {
       confettiStop();
     };
 
-    const prepareRestart = () => {
-      restartGame()
+    const backToMenu = () => {
+      resetGame()
       playerNew.value = true;
     };
 
@@ -62,7 +62,7 @@ export default {
     };
 
     watch(pairs, (currValue) => {
-      if (currValue === 0) {
+      if (currValue === 0&&gameList.value.length>0) {
         confettiStart();
       }
     });
@@ -103,7 +103,7 @@ export default {
       prepareStart,
       restartImage,
       restartImagePressed,
-      prepareRestart,
+      backToMenu
     };
   },
 };
@@ -126,7 +126,7 @@ export default {
       :src="restartImage"
       @click="prepareStart(difficulty)"
   />
-  <img class="button" :src="restartImagePressed" @click="prepareRestart()"/>
+  <img class="button" :src="restartImagePressed" @click="backToMenu()"/>
   <transition-group
       tag="section"
       name="shuffle-animation"
