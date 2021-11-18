@@ -107,10 +107,10 @@ export default {
     };
   },
 };
-// 2. information to the left side (floated)
-// 3. add timer
-// 4. add score, based on the timer value
-// 5. add responsiveness
+// 1. add timer
+// 2. add score, based on the timer value (i have to think about how Im gonna count points)
+// 3. information to the left side (floated)
+// 4. add responsiveness
 </script>
 
 <template>
