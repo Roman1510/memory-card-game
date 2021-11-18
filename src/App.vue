@@ -33,7 +33,6 @@ export default {
         backgroundMusic.play();
       }
       difficulty.value = input;
-      console.log()
       startGame(difficulty.value,gameList.value.length==0);
       confettiStop();
     };
@@ -108,10 +107,6 @@ export default {
     };
   },
 };
-// 1. refactor creategame/createBoard =>
-// generateBoard, getBoard should be used only in a component, the js files should be fully encapsulated
-
-
 // 2. information to the left side (floated)
 // 3. add timer
 // 4. add score, based on the timer value

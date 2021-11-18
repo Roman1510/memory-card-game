@@ -7,7 +7,7 @@ export default function createGame(gameList) {
 
     const startGame = (size,isRestart) => {
         if(isRestart){
-            gameList.value = generateBoard(size)
+            gameList.value = generateBoard(size) //create new board if new game, else I leaave as is
         }
         playerNew.value = false;
         gameList.value = _.shuffle(gameList.value);
@@ -23,6 +23,7 @@ export default function createGame(gameList) {
     };
 
     const restartGame = () => {
+        //this is the logic to return to the main menu
         gameList.value.splice(0)
         playerNew.value = true;
     }
