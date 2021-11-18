@@ -2,7 +2,7 @@
 import {ref, watch} from "vue";
 import Card from "./components/Card";
 import {confettiStart, confettiStop} from "./utilities/confetti";
-import {getGameList,generateBoard} from "./features/createBoard.js";
+import {getGameList} from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
 import restartImage from "./assets/images/buttons/restart/restart.png";
 import restartImagePressed from "./assets/images/buttons/restart/restart-pressed.png";
@@ -22,7 +22,7 @@ export default {
     const difficulty = ref(0);
     let gameList = ref(getGameList());
     window.gameList = gameList.value
-    let {playerNew, startGame, pairs, status} = createGame(
+    let {playerNew, startGame, pairs, status,restartGame} = createGame(
         gameList //should this be computed?
     );
     const userSelected = ref([]);
@@ -33,15 +33,13 @@ export default {
         backgroundMusic.play();
       }
       difficulty.value = input;
-      generateBoard(difficulty.value)
-      startGame(difficulty.value);
+      console.log()
+      startGame(difficulty.value,gameList.value.length==0);
       confettiStop();
     };
 
     const prepareRestart = () => {
-      difficulty.value = 0
-      generateBoard(0)
-      gameList.value = []
+      restartGame()
       playerNew.value = true;
     };
 

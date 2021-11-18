@@ -1,61 +1,53 @@
-import { ref, computed } from "vue";
+import {ref, computed} from "vue";
 import _ from "lodash";
-import { generateBoard } from "./createBoard";
+import {generateBoard} from "./createBoard";
 
 export default function createGame(gameList) {
-  const playerNew = ref(true);
+    const playerNew = ref(true);
 
-  const startGame = (size) => {
-    console.log(size)
-    generateBoard(size)
-    playerNew.value = false;
-    gameList.value = _.shuffle(gameList.value);
-    gameList.value = gameList.value.map((card, index) => {
-      return {
-        ...card,
-        matched: false,
-        visible: false,
-        position: index,
-      };
-    });
+    const startGame = (size,isRestart) => {
+        if(isRestart){
+            gameList.value = generateBoard(size)
+        }
+        playerNew.value = false;
+        gameList.value = _.shuffle(gameList.value);
+        gameList.value = gameList.value.map((card, index) => {
+            return {
+                ...card,
+                matched: false,
+                visible: false,
+                position: index,
+            };
+        });
 
-  };
+    };
 
-  const restartGame = ()=>{
-    gameList.value.splice(0)
-    playerNew.value = true;
-    gameList.value = _.shuffle(gameList.value);
-    gameList.value = gameList.value.map((card, index) => {
-      return {
-        ...card,
-        matched: false,
-        visible: false,
-        position: index,
-      };
-    });
-  }
-
-  const pairs = computed(() => {
-    const cards = gameList.value.filter(
-      (card) => card.matched === false
-    ).length;
-    return cards / 2;
-  });
-
-  const status = computed(() => {
-    if (pairs.value === 0 && gameList.value.length > 0) {
-      return "player wins";
-    } else if (pairs.value !== 0) {
-      return `remaining pairs : ${pairs.value}`;
+    const restartGame = () => {
+        gameList.value.splice(0)
+        playerNew.value = true;
     }
-    return "";
-  });
 
-  return {
-    playerNew,
-    startGame,
-    restartGame,
-    pairs,
-    status,
-  };
+    const pairs = computed(() => {
+        const cards = gameList.value.filter(
+            (card) => card.matched === false
+        ).length;
+        return cards / 2;
+    });
+
+    const status = computed(() => {
+        if (pairs.value === 0 && gameList.value.length > 0) {
+            return "player wins";
+        } else if (pairs.value !== 0) {
+            return `remaining pairs : ${pairs.value}`;
+        }
+        return "";
+    });
+
+    return {
+        playerNew,
+        startGame,
+        restartGame,
+        pairs,
+        status,
+    };
 }
