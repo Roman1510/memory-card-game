@@ -11,7 +11,15 @@ import hardPressed from "../assets/images/buttons/difficulty/hard/hard-pressed.p
 export default {
   name: "Main menu",
   setup: function () {
-    const handleChoice = () => {};
+    const handleChoice = (input) => {
+       console.log(input,'handleChoice called')
+    };
+    const addShadow = (input) => {
+        console.log(input,'addShadow called')
+    }
+    const changeImage = (input) => {
+        console.log(input,'changeImage called')
+    }
 
     const mainMenuStyle = {
       backgroundImage: `url(${mainMenu})`,
@@ -25,6 +33,8 @@ export default {
 
     return {
       handleChoice,
+      addShadow,
+      changeImage,
       easy,
       easyPressed,
       notSoEasy,
@@ -42,10 +52,11 @@ export default {
 <template>
     <div>
         <img class="main-menu" :src="mainMenu" alt="">
-        <img class="btn easiest" :src="easiest" alt="">
-        <img class="btn easy" :src="easy" alt="">
-        <img class="btn not-so-easy" :src="notSoEasy" alt="">
-        <img class="btn hard" :src="hard" alt="">
+        <!-- here the buttons go -->
+        <img class="btn easiest" :src="easiest" alt="" @click="handleChoice(1)" @mousedown="addShadow(1)">
+        <img class="btn easy" :src="easy" alt="" @click="handleChoice(2)" @mousedown="addShadow(2)">
+        <img class="btn not-so-easy" :src="notSoEasy" alt="" @click="handleChoice(3)" @mousedown="addShadow(3)">
+        <img class="btn hard" :src="hard" alt="" @click="handleChoice(4)" @mousedown="addShadow(4)">
     </div>
 </template>
 <style scoped>
@@ -56,10 +67,10 @@ export default {
     z-index: 1;
     left: 18vh;
 }
-.easy {
+.easiest {
     top: 20vh;
 }
-.easiest {
+.easy {
     top: 35vh;
 }
 .not-so-easy {
