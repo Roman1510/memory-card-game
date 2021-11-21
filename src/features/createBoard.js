@@ -4,7 +4,6 @@ let gameList = [];
 let cardDataShuffled = _.shuffle(fullCardsList);
 
 const fillBoard = (size) => {
-
   cardDataShuffled = _.shuffle(fullCardsList).slice(0, size);
   cardDataShuffled.forEach((item) => {
     {
@@ -41,14 +40,14 @@ export const generateBoard = (size) => {
   if (size === 0) {
     gameList.splice(0);
     updateCardPosition();
-    return gameList
+    return gameList;
   }
   gameList.splice(0);
   fillBoard(size);
   updateCardPosition();
-  return gameList
+  return gameList;
 };
 
-export const getGameList = () =>{
-  return gameList
-}
+export const getGameList = () => {
+  return gameList;
+};

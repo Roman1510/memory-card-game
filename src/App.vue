@@ -1,8 +1,8 @@
 <script>
-import {ref, watch} from "vue";
+import { ref, watch } from "vue";
 import Card from "./components/Card";
-import {confettiStart, confettiStop} from "./utilities/confetti";
-import {getGameList} from "./features/createBoard.js";
+import { confettiStart, confettiStop } from "./utilities/confetti";
+import { getGameList } from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
 import restartImage from "./assets/images/buttons/restart/restart.png";
 import restartImagePressed from "./assets/images/buttons/restart/restart-pressed.png";
@@ -21,10 +21,8 @@ export default {
   setup: function () {
     const difficulty = ref(0);
     let gameList = ref(getGameList());
-    window.gameList = gameList.value
-    let {playerNew, startGame, pairs, status,resetGame} = createGame(
-        gameList //should this be computed?
-    );
+    let { playerNew, startGame, pairs, status, resetGame } =
+      createGame(gameList);
     const userSelected = ref([]);
 
     const prepareStart = (input) => {
@@ -33,12 +31,12 @@ export default {
         backgroundMusic.play();
       }
       difficulty.value = input;
-      startGame(difficulty.value,gameList.value.length==0);
+      startGame(difficulty.value, gameList.value.length == 0);
       confettiStop();
     };
 
     const backToMenu = () => {
-      resetGame()
+      resetGame();
       playerNew.value = true;
     };
 
@@ -48,8 +46,8 @@ export default {
       if (gameList.value[selected.position].matched === false) {
         if (userSelected.value[0]) {
           if (
-              userSelected.value[0].position === selected.position &&
-              userSelected.value[0].faceValue === selected.faceValue
+            userSelected.value[0].position === selected.position &&
+            userSelected.value[0].faceValue === selected.faceValue
           ) {
             return;
           } else {
@@ -62,55 +60,54 @@ export default {
     };
 
     watch(pairs, (currValue) => {
-      if (currValue === 0&&gameList.value.length>0) {
+      if (currValue === 0 && gameList.value.length > 0) {
         confettiStart();
       }
     });
 
     watch(
-        userSelected,
-        (currValue) => {
-          if (currValue.length === 2) {
-            const cardOne = currValue[0];
-            const cardTwo = currValue[1];
+      userSelected,
+      (currValue) => {
+        if (currValue.length === 2) {
+          const cardOne = currValue[0];
+          const cardTwo = currValue[1];
 
-            if (cardOne.faceValue === cardTwo.faceValue) {
-              matchMusic.play();
-              gameList.value[cardOne.position].matched = true;
-              gameList.value[cardTwo.position].matched = true;
-            } else {
-              setTimeout(() => {
-                flipMusic.play();
-                gameList.value[cardOne.position].visible = false;
-                gameList.value[cardTwo.position].visible = false;
-              }, 1000);
-            }
-
-            userSelected.value.length = 0;
+          if (cardOne.faceValue === cardTwo.faceValue) {
+            matchMusic.play();
+            gameList.value[cardOne.position].matched = true;
+            gameList.value[cardTwo.position].matched = true;
+          } else {
+            setTimeout(() => {
+              flipMusic.play();
+              gameList.value[cardOne.position].visible = false;
+              gameList.value[cardTwo.position].visible = false;
+            }, 1000);
           }
-        },
-        {deep: true}
+
+          userSelected.value.length = 0;
+        }
+      },
+      { deep: true }
     );
 
     return {
-      gameList,
       flipCard,
-      userSelected,
+      backToMenu,
+      prepareStart,
+      gameList,
       status,
-      startGame,
       playerNew,
       difficulty,
-      prepareStart,
       restartImage,
       restartImagePressed,
-      backToMenu
     };
   },
 };
-// 1. add timer (timer will be from 0 to inf), the quantity of open/closes will be limited (by experiments)
-// 2. add score, based on the timer value (i have to think about how Im gonna count points)
-// 3. information to the left side (floated)
-// 4. add responsiveness
+// 1. make the main menu
+// 2. add timer (timer will be from 0 to inf), the quantity of open/closes will be limited (by experiments)
+// 3. add score, based on the timer value (i have to think about how Im gonna count points)
+// 4. information to the left side (floated)
+// 5. add responsiveness
 </script>
 
 <template>
@@ -121,17 +118,17 @@ export default {
   <button v-if="playerNew" @click="prepareStart(8)">easy</button>
   <button v-if="playerNew" @click="prepareStart(2)">easiest</button>
   <img
-      v-else
-      class="button"
-      :src="restartImage"
-      @click="prepareStart(difficulty)"
+    v-else
+    class="button"
+    :src="restartImage"
+    @click="prepareStart(difficulty)"
   />
-  <img class="button" :src="restartImagePressed" @click="backToMenu()"/>
+  <img class="button" :src="restartImagePressed" @click="backToMenu()" />
   <transition-group
-      tag="section"
-      name="shuffle-animation"
-      class="board"
-      :class="{
+    tag="section"
+    name="shuffle-animation"
+    class="board"
+    :class="{
       hard: difficulty === 32,
       medium: difficulty === 18,
       easy: difficulty === 8,
@@ -139,13 +136,13 @@ export default {
     }"
   >
     <Card
-        v-for="card in gameList"
-        :key="`${card.value}-${card.sort}-${card.size}}`"
-        :value="card.value"
-        :visible="card.visible"
-        :position="card.position"
-        :matched="card.matched"
-        @select-card="flipCard"
+      v-for="card in gameList"
+      :key="`${card.value}-${card.sort}-${card.size}}`"
+      :value="card.value"
+      :visible="card.visible"
+      :position="card.position"
+      :matched="card.matched"
+      @select-card="flipCard"
     >
     </Card>
   </transition-group>
