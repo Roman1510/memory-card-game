@@ -2,21 +2,21 @@
 import { ref } from "@vue/reactivity";
 import mainMenu from "../assets/images/menu/main-menu.png";
 import easy from "../assets/images/buttons/difficulty/easy/easy.png";
-//import easyPressed from "../assets/images/buttons/difficulty/easy/easy-pressed.png";
+import easyPressed from "../assets/images/buttons/difficulty/easy/easy-pressed.png";
 import notSoEasy from "../assets/images/buttons/difficulty/not-so-easy/not-so-easy.png";
-//import notSoEasyPressed from "../assets/images/buttons/difficulty/not-so-easy/not-so-easy-pressed.png";
+import notSoEasyPressed from "../assets/images/buttons/difficulty/not-so-easy/not-so-easy-pressed.png";
 import easiest from "../assets/images/buttons/difficulty/easiest/easiest.png";
-//import easiestPressed from "../assets/images/buttons/difficulty/easiest/easiest-pressed.png";
+import easiestPressed from "../assets/images/buttons/difficulty/easiest/easiest-pressed.png";
 import hard from "../assets/images/buttons/difficulty/hard/hard.png";
-//import hardPressed from "../assets/images/buttons/difficulty/hard/hard-pressed.png";
+import hardPressed from "../assets/images/buttons/difficulty/hard/hard-pressed.png";
 export default {
   name: "Main menu",
   setup: function () {
     const buttons = ref({
-        easiest,
-        easy,
-        notSoEasy,
-        hard
+        easiest: {default:easiest,pressed:easiestPressed},
+        easy: {default:easy,pressed:easyPressed},
+        notSoEasy: {default:notSoEasy,pressed:notSoEasyPressed},
+        hard:{default:hard,pressed:hardPressed}
     })
     
     const handleChoice = (input) => {
@@ -24,6 +24,7 @@ export default {
     };
     const addShadow = (input) => {
       console.log(input, "addShadow called");
+      
     };
     const changeImage = (input) => {
       console.log(input, "changeImage called");
@@ -45,28 +46,28 @@ export default {
     <!-- here the buttons go -->
     <img
       class="btn easiest"
-      :src="buttons.easiest"
+      :src="buttons.easiest.default"
       alt=""
       @click="handleChoice(1)"
       @mousedown="addShadow('easiest')"
     />
     <img
       class="btn easy"
-      :src="buttons.easy"
+      :src="buttons.easy.default"
       alt=""
       @click="handleChoice(2)"
       @mousedown="addShadow('easy')"
     />
     <img
       class="btn not-so-easy"
-      :src="buttons.notSoEasy"
+      :src="buttons.notSoEasy.default"
       alt=""
       @click="handleChoice(3)"
       @mousedown="addShadow('not-so-easy')"
     />
     <img
       class="btn hard"
-      :src="buttons.hard"
+      :src="buttons.hard.default"
       alt=""
       @click="handleChoice(4)"
       @mousedown="addShadow('hard')"
