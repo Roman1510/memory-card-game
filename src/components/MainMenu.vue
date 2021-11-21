@@ -1,5 +1,5 @@
 <script>
-
+import mainMenu
 import easy from "../assets/images/buttons/difficulty/easy/easy.png"
 import easyPressed from "../assets/images/buttons/difficulty/easy/easy-pressed.png"
 import notSoEasy from "../assets/images/buttons/difficulty/not-so-easy/not-so-easy.png"
