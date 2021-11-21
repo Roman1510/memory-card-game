@@ -13,22 +13,26 @@ export default {
   name: "Main menu",
   setup: function () {
     const buttons = ref({
-        easiest: {default:easiest,pressed:easiestPressed, isPressed: false},
-        easy: {default:easy,pressed:easyPressed, isPressed: false},
-        notSoEasy: {default:notSoEasy,pressed:notSoEasyPressed, isPressed: false},
-        hard:{default:hard,pressed:hardPressed, isPressed: false}
-    })
-    
+      easiest: { default: easiest, pressed: easiestPressed, isPressed: false },
+      easy: { default: easy, pressed: easyPressed, isPressed: false },
+      notSoEasy: {
+        default: notSoEasy,
+        pressed: notSoEasyPressed,
+        isPressed: false,
+      },
+      hard: { default: hard, pressed: hardPressed, isPressed: false },
+    });
+
     const handleChoice = (input) => {
       console.log(input, "handleChoice called");
     };
     const addShadow = (input) => {
-      console.log(input, "addShadow called");
-      buttons.value[input].isPressed=true
+      console.log(buttons.value);
+      buttons.value[input].isPressed = true;
     };
     const removeShadow = (input) => {
       console.log(input, "removeShadow called");
-      buttons.value[input].isPressed=false
+      buttons.value[input].isPressed = false;
     };
     const changeImage = (input) => {
       console.log(input, "changeImage called");
@@ -40,7 +44,7 @@ export default {
       removeShadow,
       changeImage,
       mainMenu,
-      buttons
+      buttons,
     };
   },
 };
@@ -51,35 +55,51 @@ export default {
     <!-- here the buttons go -->
     <img
       class="btn easiest"
-      :src="buttons.easiest.default"
+      :src="
+        buttons.easiest.isPressed
+          ? buttons.easiest.pressed
+          : buttons.easiest.default
+      "
       alt=""
-      @click="handleChoice(1)"
+      @click.prevent="handleChoice(1)"
       @mousedown="addShadow('easiest')"
       @mouseup="removeShadow('easiest')"
+      @mouseleave="removeShadow('easiest')"
     />
     <img
       class="btn easy"
-      :src="buttons.easy.default"
+      :src="
+        buttons.easy.isPressed ? buttons.easy.pressed : buttons.easy.default
+      "
       alt=""
-      @click="handleChoice(2)"
+      @click.prevent="handleChoice(2)"
       @mousedown="addShadow('easy')"
       @mouseup="removeShadow('easy')"
+      @mouseleave="removeShadow('easy')"
     />
     <img
       class="btn not-so-easy"
-      :src="buttons.notSoEasy.default"
+      :src="
+        buttons.notSoEasy.isPressed
+          ? buttons.notSoEasy.pressed
+          : buttons.notSoEasy.default
+      "
       alt=""
-      @click="handleChoice(3)"
-      @mousedown="addShadow('not-so-easy')"
-      @mouseup="removeShadow('not-so-easy')"
+      @click.prevent="handleChoice(3)"
+      @mousedown="addShadow('notSoEasy')"
+      @mouseup="removeShadow('notSoEasy')"
+      @mouseleave="removeShadow('notSoEasy')"
     />
     <img
       class="btn hard"
-      :src="buttons.hard.default"
+      :src="
+        buttons.hard.isPressed ? buttons.hard.pressed : buttons.hard.default
+      "
       alt=""
-      @click="handleChoice(4)"
+      @click.prevent="handleChoice(4)"
       @mousedown="addShadow('hard')"
       @mouseup="removeShadow('hard')"
+      @mouseleave="removeShadow('hard')"
     />
   </div>
 </template>
