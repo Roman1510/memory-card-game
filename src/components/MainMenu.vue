@@ -13,10 +13,10 @@ export default {
   name: "Main menu",
   setup: function () {
     const buttons = ref({
-        easiest: {default:easiest,pressed:easiestPressed},
-        easy: {default:easy,pressed:easyPressed},
-        notSoEasy: {default:notSoEasy,pressed:notSoEasyPressed},
-        hard:{default:hard,pressed:hardPressed}
+        easiest: {default:easiest,pressed:easiestPressed, isPressed: false},
+        easy: {default:easy,pressed:easyPressed, isPressed: false},
+        notSoEasy: {default:notSoEasy,pressed:notSoEasyPressed, isPressed: false},
+        hard:{default:hard,pressed:hardPressed, isPressed: false}
     })
     
     const handleChoice = (input) => {
@@ -24,7 +24,11 @@ export default {
     };
     const addShadow = (input) => {
       console.log(input, "addShadow called");
-      
+      buttons.value[input].isPressed=true
+    };
+    const removeShadow = (input) => {
+      console.log(input, "removeShadow called");
+      buttons.value[input].isPressed=false
     };
     const changeImage = (input) => {
       console.log(input, "changeImage called");
@@ -33,6 +37,7 @@ export default {
     return {
       handleChoice,
       addShadow,
+      removeShadow,
       changeImage,
       mainMenu,
       buttons
@@ -50,6 +55,7 @@ export default {
       alt=""
       @click="handleChoice(1)"
       @mousedown="addShadow('easiest')"
+      @mouseup="removeShadow('easiest')"
     />
     <img
       class="btn easy"
@@ -57,6 +63,7 @@ export default {
       alt=""
       @click="handleChoice(2)"
       @mousedown="addShadow('easy')"
+      @mouseup="removeShadow('easy')"
     />
     <img
       class="btn not-so-easy"
@@ -64,6 +71,7 @@ export default {
       alt=""
       @click="handleChoice(3)"
       @mousedown="addShadow('not-so-easy')"
+      @mouseup="removeShadow('not-so-easy')"
     />
     <img
       class="btn hard"
@@ -71,6 +79,7 @@ export default {
       alt=""
       @click="handleChoice(4)"
       @mousedown="addShadow('hard')"
+      @mouseup="removeShadow('hard')"
     />
   </div>
 </template>
