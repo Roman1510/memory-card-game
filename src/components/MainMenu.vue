@@ -11,7 +11,7 @@ import hard from "../assets/images/buttons/difficulty/hard/hard.png";
 import hardPressed from "../assets/images/buttons/difficulty/hard/hard-pressed.png";
 export default {
   name: "Main menu",
-  setup: function () {
+  setup: function (props,context) {
     const buttons = ref({
       easiest: { default: easiest, pressed: easiestPressed, isPressed: false },
       easy: { default: easy, pressed: easyPressed, isPressed: false },
@@ -24,27 +24,22 @@ export default {
     });
 
     const handleChoice = (input) => {
-      console.log(input, "handleChoice called");
+      //
+      context.emit("difficulty", input);
     };
     const addShadow = (input) => {
-      console.log(buttons.value);
       buttons.value[input].isPressed = true;
     };
     const removeShadow = (input) => {
-      console.log(input, "removeShadow called");
       buttons.value[input].isPressed = false;
-    };
-    const changeImage = (input) => {
-      console.log(input, "changeImage called");
     };
 
     return {
       handleChoice,
       addShadow,
       removeShadow,
-      changeImage,
       mainMenu,
-      buttons
+      buttons,
     };
   },
 };
@@ -55,7 +50,7 @@ export default {
     <!-- here the buttons go -->
     <img
       class="btn easiest"
-      :class="buttons.easiest.isPressed ? 'pressed': ''"
+      :class="buttons.easiest.isPressed ? 'pressed' : ''"
       :src="
         buttons.easiest.isPressed
           ? buttons.easiest.pressed
@@ -69,7 +64,7 @@ export default {
     />
     <img
       class="btn easy"
-      :class="buttons.easy.isPressed ? 'pressed': ''"
+      :class="buttons.easy.isPressed ? 'pressed' : ''"
       :src="
         buttons.easy.isPressed ? buttons.easy.pressed : buttons.easy.default
       "
@@ -81,7 +76,7 @@ export default {
     />
     <img
       class="btn not-so-easy"
-      :class="buttons.notSoEasy.isPressed ? 'pressed': ''"
+      :class="buttons.notSoEasy.isPressed ? 'pressed' : ''"
       :src="
         buttons.notSoEasy.isPressed
           ? buttons.notSoEasy.pressed
@@ -95,7 +90,7 @@ export default {
     />
     <img
       class="btn hard"
-      :class="buttons.hard.isPressed ? 'pressed': ''"
+      :class="buttons.hard.isPressed ? 'pressed' : ''"
       :src="
         buttons.hard.isPressed ? buttons.hard.pressed : buttons.hard.default
       "

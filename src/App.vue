@@ -15,6 +15,7 @@ import {
 
 export default {
   name: "Memory card game",
+  
   components: {
     Card,
   },

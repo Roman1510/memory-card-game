@@ -1,5 +1,4 @@
 import { createApp } from 'vue'
 // import App from './App.vue'
-import MainMenu from './components/MainMenu.vue'
-
-createApp(MainMenu).mount('#app')
+import Test from './components/Test.vue'
+createApp(Test).mount('#app')
