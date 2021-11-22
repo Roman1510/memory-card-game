@@ -44,7 +44,7 @@ export default {
       removeShadow,
       changeImage,
       mainMenu,
-      buttons,
+      buttons
     };
   },
 };
@@ -55,6 +55,7 @@ export default {
     <!-- here the buttons go -->
     <img
       class="btn easiest"
+      :class="buttons.easiest.isPressed ? 'pressed': ''"
       :src="
         buttons.easiest.isPressed
           ? buttons.easiest.pressed
@@ -68,6 +69,7 @@ export default {
     />
     <img
       class="btn easy"
+      :class="buttons.easy.isPressed ? 'pressed': ''"
       :src="
         buttons.easy.isPressed ? buttons.easy.pressed : buttons.easy.default
       "
@@ -79,6 +81,7 @@ export default {
     />
     <img
       class="btn not-so-easy"
+      :class="buttons.notSoEasy.isPressed ? 'pressed': ''"
       :src="
         buttons.notSoEasy.isPressed
           ? buttons.notSoEasy.pressed
@@ -92,6 +95,7 @@ export default {
     />
     <img
       class="btn hard"
+      :class="buttons.hard.isPressed ? 'pressed': ''"
       :src="
         buttons.hard.isPressed ? buttons.hard.pressed : buttons.hard.default
       "
@@ -110,6 +114,10 @@ export default {
   height: 9vh;
   z-index: 1;
   left: 18vh;
+}
+.pressed {
+  -webkit-filter: drop-shadow(3px 3px 3px rgb(70, 69, 69));
+  filter: drop-shadow(3px 3px 3px rgb(70, 69, 69));
 }
 .easiest {
   top: 20vh;
