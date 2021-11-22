@@ -1,6 +1,7 @@
 <script>
 import { ref, watch } from "vue";
 import Card from "./components/Card";
+import MainMenu from "./components/MainMenu.vue";
 import { confettiStart, confettiStop } from "./utilities/confetti";
 import { getGameList } from "./features/createBoard.js";
 import createGame from "./features/createGame.js";
@@ -15,9 +16,10 @@ import {
 
 export default {
   name: "Memory card game",
-  
+
   components: {
     Card,
+    MainMenu,
   },
   setup: function () {
     const difficulty = ref(0);
@@ -114,6 +116,7 @@ export default {
 <template>
   <h1>Happy cards</h1>
   <h2>{{ status }}</h2>
+  <div><MainMenu></MainMenu></div>
   <button v-if="playerNew" @click="prepareStart(32)">hard</button>
   <button v-if="playerNew" @click="prepareStart(18)">medium</button>
   <button v-if="playerNew" @click="prepareStart(8)">easy</button>
@@ -222,4 +225,6 @@ button {
   width: 100px;
   height: 100px;
 }
+
+
 </style>

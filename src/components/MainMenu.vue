@@ -11,7 +11,7 @@ import hard from "../assets/images/buttons/difficulty/hard/hard.png";
 import hardPressed from "../assets/images/buttons/difficulty/hard/hard-pressed.png";
 export default {
   name: "Main menu",
-  setup: function (props,context) {
+  setup: function (props, context) {
     const buttons = ref({
       easiest: { default: easiest, pressed: easiestPressed, isPressed: false },
       easy: { default: easy, pressed: easyPressed, isPressed: false },
@@ -45,7 +45,7 @@ export default {
 };
 </script>
 <template>
-  <div>
+  <div class="center">
     <img class="main-menu" :src="mainMenu" alt="" />
     <!-- here the buttons go -->
     <img
@@ -103,8 +103,19 @@ export default {
   </div>
 </template>
 <style scoped>
+.center{
+  display: flex;
+}
+.main-menu {
+  position: fixed; /* Stay in place */
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  background-color: rgba(148, 147, 147, 0.4); /* Black w/ opacity */
+  left: 0vh;
+  top: 0vh;
+}
 .btn {
-  position: absolute;
+  position: relative;
   width: 30vh;
   height: 9vh;
   z-index: 1;
@@ -114,20 +125,9 @@ export default {
   -webkit-filter: drop-shadow(3px 3px 3px rgb(70, 69, 69));
   filter: drop-shadow(3px 3px 3px rgb(70, 69, 69));
 }
-.easiest {
-  top: 20vh;
-}
-.easy {
-  top: 35vh;
-}
-.not-so-easy {
-  top: 50vh;
-}
-.hard {
-  top: 65vh;
-}
+
 .main-menu {
-  position: absolute;
+  position: fixed;
   width: 65vh;
   height: 90vh;
 }
