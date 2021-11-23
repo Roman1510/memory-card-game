@@ -106,7 +106,7 @@ export default {
     };
   },
 };
-// 1. make the main menu
+// 1. center the main menu and buttons, make it a popup
 // 2. add timer (timer will be from 0 to inf), the quantity of open/closes will be limited (by experiments)
 // 3. add score, based on the timer value (i have to think about how Im gonna count points)
 // 4. information to the left side (floated)
