@@ -5,7 +5,7 @@
         <div class="modal-wrapper">
           <div class="modal-container">
             <div class="modal-body">
-              <slot name="title"> Fallback Title </slot>
+              <slot name="title">  </slot>
               <slot name="content"> Fallback Content </slot>
               <slot name="comments"> Fallback Comments </slot>
             </div>

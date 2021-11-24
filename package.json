@@ -1,8 +1,11 @@
 {
+  "homepage": "https://Roman1510.github.io/memory-card-game",
   "name": "memory-card-game",
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -b master -d build",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
@@ -10,6 +13,7 @@
   "dependencies": {
     "canvas-confetti": "^1.4.0",
     "core-js": "^3.6.5",
+    "gh-pages": "^3.2.3",
     "howler": "^2.2.3",
     "lodash": "^4.17.21",
     "vue": "^3.0.0"
