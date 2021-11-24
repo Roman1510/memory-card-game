@@ -43,9 +43,6 @@ export default {
       playerNew.value = true;
     };
 
-    const test = (input) => {
-      console.log(input);
-    };
     const flipCard = (selected) => {
       chooseMusic.play();
       gameList.value[selected.position].visible = true;
@@ -106,15 +103,20 @@ export default {
       difficulty,
       restartImage,
       restartImagePressed,
-      test,
     };
   },
 };
-// 1. center the main menu and buttons, make it a popup
-// 2. add timer (timer will be from 0 to inf), the quantity of open/closes will be limited (by experiments)
-// 3. add score, based on the timer value (i have to think about how Im gonna count points)
-// 4. information to the left side (floated)
-// 5. add responsiveness
+//current tasks
+// 1. add blurred background to the app when main menu is active + parallax
+// 2. information to the left side (floated)
+// 3. fix the button to restart
+// 4. fix the button to shuffle
+// 5. fix the behavior when the game is reset (the cards are under the modal)
+
+// future improvements
+// 1. add timer (timer will be from 0 to inf), the quantity of open/closes will be limited (by experiments)
+// 2. add score, based on the timer value (i have to think about how Im gonna count points)
+// 3. add responsiveness
 </script>
 
 <template>
