@@ -11,6 +11,7 @@ import hard from "../assets/images/buttons/difficulty/hard/hard.png";
 import hardPressed from "../assets/images/buttons/difficulty/hard/hard-pressed.png";
 export default {
   name: "Main menu",
+  emits:['difficulty-select'],
   setup: function (props, context) {
     const buttons = ref({
       easiest: { default: easiest, pressed: easiestPressed, isPressed: false },
@@ -25,7 +26,7 @@ export default {
 
     const handleChoice = (input) => {
       //
-      context.emit("difficulty", input);
+      context.emit("difficulty-select", input);
     };
     const addShadow = (input) => {
       buttons.value[input].isPressed = true;
@@ -45,9 +46,12 @@ export default {
 };
 </script>
 <template>
-  <div class="center">
+  <div class="back"></div>
+  <div class="image-wrapper">
     <img class="main-menu" :src="mainMenu" alt="" />
     <!-- here the buttons go -->
+  </div>
+  <div class="buttons-wrapper">
     <img
       class="btn easiest"
       :class="buttons.easiest.isPressed ? 'pressed' : ''"
@@ -57,7 +61,7 @@ export default {
           : buttons.easiest.default
       "
       alt=""
-      @click.prevent="handleChoice(1)"
+      @click.prevent="handleChoice(2)"
       @mousedown="addShadow('easiest')"
       @mouseup="removeShadow('easiest')"
       @mouseleave="removeShadow('easiest')"
@@ -69,7 +73,7 @@ export default {
         buttons.easy.isPressed ? buttons.easy.pressed : buttons.easy.default
       "
       alt=""
-      @click.prevent="handleChoice(2)"
+      @click.prevent="handleChoice(8)"
       @mousedown="addShadow('easy')"
       @mouseup="removeShadow('easy')"
       @mouseleave="removeShadow('easy')"
@@ -83,7 +87,7 @@ export default {
           : buttons.notSoEasy.default
       "
       alt=""
-      @click.prevent="handleChoice(3)"
+      @click.prevent="handleChoice(18)"
       @mousedown="addShadow('notSoEasy')"
       @mouseup="removeShadow('notSoEasy')"
       @mouseleave="removeShadow('notSoEasy')"
@@ -95,7 +99,7 @@ export default {
         buttons.hard.isPressed ? buttons.hard.pressed : buttons.hard.default
       "
       alt=""
-      @click.prevent="handleChoice(4)"
+      @click.prevent="handleChoice(32)"
       @mousedown="addShadow('hard')"
       @mouseup="removeShadow('hard')"
       @mouseleave="removeShadow('hard')"
@@ -103,23 +107,35 @@ export default {
   </div>
 </template>
 <style scoped>
-.center{
+.image-wrapper {
+  margin-top: 3vh;
   display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  
+  align-items: center;
 }
-.main-menu {
-  position: fixed; /* Stay in place */
-  width: 100%; /* Full width */
-  height: 100%; /* Full height */
-  background-color: rgba(148, 147, 147, 0.4); /* Black w/ opacity */
-  left: 0vh;
-  top: 0vh;
+.back{
+  position: absolute;
+  top:0;
+  left:0;
+  background-color: rgba(148, 147, 147, 0.4);
+}
+.buttons-wrapper {
+  width: 100%;
+  height: 100%;
+  padding-top:10vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .btn {
   position: relative;
   width: 30vh;
   height: 9vh;
   z-index: 1;
-  left: 18vh;
+  margin-top: 7vh;
 }
 .pressed {
   -webkit-filter: drop-shadow(3px 3px 3px rgb(70, 69, 69));

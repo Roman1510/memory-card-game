@@ -16,11 +16,11 @@ import {
 
 export default {
   name: "Memory card game",
-
   components: {
     Card,
     MainMenu,
   },
+  emits:['difficulty-select'],
   setup: function () {
     const difficulty = ref(0);
     let gameList = ref(getGameList());
@@ -43,6 +43,9 @@ export default {
       playerNew.value = true;
     };
 
+    const test = (input) => {
+      console.log(input);
+    };
     const flipCard = (selected) => {
       chooseMusic.play();
       gameList.value[selected.position].visible = true;
@@ -103,6 +106,7 @@ export default {
       difficulty,
       restartImage,
       restartImagePressed,
+      test,
     };
   },
 };
@@ -114,13 +118,11 @@ export default {
 </script>
 
 <template>
-  <h1>Happy cards</h1>
   <h2>{{ status }}</h2>
-  <div><MainMenu></MainMenu></div>
-  <button v-if="playerNew" @click="prepareStart(32)">hard</button>
-  <button v-if="playerNew" @click="prepareStart(18)">medium</button>
-  <button v-if="playerNew" @click="prepareStart(8)">easy</button>
-  <button v-if="playerNew" @click="prepareStart(2)">easiest</button>
+    <MainMenu
+      v-if="playerNew"
+      @difficulty-select="(input)=>{prepareStart(input)}"
+    ></MainMenu>
   <img
     v-else
     class="button"
@@ -225,6 +227,4 @@ button {
   width: 100px;
   height: 100px;
 }
-
-
 </style>
