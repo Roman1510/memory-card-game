@@ -20,7 +20,7 @@ export default {
     Card,
     MainMenu,
   },
-  emits:['difficulty-select'],
+  emits: ["difficulty-select"],
   setup: function () {
     const difficulty = ref(0);
     let gameList = ref(getGameList());
@@ -121,10 +121,14 @@ export default {
 
 <template>
   <h2>{{ status }}</h2>
-    <MainMenu
-      v-if="playerNew"
-      @difficulty-select="(input)=>{prepareStart(input)}"
-    ></MainMenu>
+  <MainMenu
+    v-if="playerNew"
+    @difficulty-select="
+      (input) => {
+        prepareStart(input);
+      }
+    "
+  ></MainMenu>
   <img
     v-else
     class="button"
@@ -132,28 +136,31 @@ export default {
     @click="prepareStart(difficulty)"
   />
   <img class="button" :src="restartImagePressed" @click="backToMenu()" />
-  <transition-group
-    tag="section"
-    name="shuffle-animation"
-    class="board"
-    :class="{
-      hard: difficulty === 32,
-      medium: difficulty === 18,
-      easy: difficulty === 8,
-      easiest: difficulty === 2,
-    }"
-  >
-    <Card
-      v-for="card in gameList"
-      :key="`${card.value}-${card.sort}-${card.size}}`"
-      :value="card.value"
-      :visible="card.visible"
-      :position="card.position"
-      :matched="card.matched"
-      @select-card="flipCard"
+  <div class="center">
+    <transition-group
+      tag="section"
+      name="shuffle-animation"
+      class="board"
+      :class="{
+        hard: difficulty === 32,
+        medium: difficulty === 18,
+        easy: difficulty === 8,
+        easiest: difficulty === 2,
+      }"
     >
-    </Card>
-  </transition-group>
+      <Card
+        v-for="card in gameList"
+        :key="`${card.value}-${card.sort}-${card.size}}`"
+        :value="card.value"
+        :visible="card.visible"
+        :position="card.position"
+        :matched="card.matched"
+        @select-card="flipCard"
+        :isSmall="difficulty === 32"
+      >
+      </Card>
+    </transition-group>
+  </div>
 </template>
 
 <style>
@@ -177,7 +184,9 @@ h2 {
   text-align: center;
   color: #f103a1;
 }
-
+.center{
+  display: flex;
+}
 .board {
   justify-content: center;
   margin-top: 3em;
@@ -185,10 +194,10 @@ h2 {
 }
 
 .hard {
-  grid-template-columns: repeat(8, 80px);
-  grid-template-rows: repeat(8, 80px);
-  grid-column-gap: 7px;
-  grid-row-gap: 7px;
+  grid-template-columns: repeat(8, 60px);
+  grid-template-rows: repeat(8, 60px);
+  grid-column-gap: 5px;
+  grid-row-gap: 5px;
 }
 
 .medium {
