@@ -39,19 +39,7 @@ export default {
       return props.isSmall;
     });
 
-    const smallBackground = () => {
-      console.log("that was used");
-      return {
-        "background-size": "60px",
-      };
-    };
 
-    const smallSize = () => {
-      return {
-        width: "54px", //80/72 = 0.9, that's why 60* 0.9 is 54 (based on the App.vue)
-        height: "54px",
-      };
-    };
 
     const selectCard = () => {
       context.emit("select-card", {
@@ -64,25 +52,21 @@ export default {
       selectCard,
       getImgUrl,
       flippedStyles,
-      smallIcon,
-      smallBackground,
-      smallSize,
+      smallIcon
     };
   },
 };
+//the implementation of img for both cases doesn't make any sense, should refactor this one...
+
 </script>
 <template>
   <div
-    class="card"
+    class="card-wrapper"
     @click="selectCard"
-    :class="{ 'icon-checkmark': matched, 'is-flipped': flippedStyles }"
+    :class="{ 'icon-checkmark': matched, 'is-flipped': visible }"
   >
     <div
       v-if="visible"
-      :style="{
-        width: '54px',
-        height: '54px',
-      }"
       class="card-face is-front"
       :class="{
         'image-shake': !matched && flippedStyles,
@@ -91,27 +75,17 @@ export default {
       <img
         :src="getImgUrl(value)"
         :alt="value"
-        :class="{
-          'small-size': smallIcon,
-        }"
       />
     </div>
     <div
       v-else
       class="card-face is-back"
-      :class="{ 'small-background': smallIcon }"
     ></div>
   </div>
 </template>
 <style scoped>
-.small-size {
-  width: 54px !important;
-  height: 54px !important;
-}
-.small-background {
-  background-size: 60px !important;
-}
-.card {
+.card-wrapper {
+  /* placeholder for the card */
   border: 1px solid #253f84;
   border-radius: 50%;
   position: relative;
@@ -119,21 +93,19 @@ export default {
   transform-style: preserve-3d;
   cursor: pointer;
 }
-
-.card div {
+.card-wrapper>.card-face {
+  /* this is needed to center the card face inside a wrapper */
   display: flex;
   justify-content: center;
   align-content: center;
   align-items: center;
 }
-
 .card-face {
+  /* this is needed for correct display of the card-back when not clicked */
   border-radius: 50%;
   width: 100%;
   height: 100%;
-  position: absolute;
 }
-
 .card-face.is-front img {
   height: 72px;
   width: 72px;
@@ -152,12 +124,12 @@ export default {
   animation: glow 1s alternate-reverse;
 }
 
-.card.is-flipped {
+.card-wrapper.is-flipped {
   transform: rotateY(180deg);
 }
 
 .image-shake {
-  animation: shake 0.7s infinite;
+  animation: shake 0.5s infinite;
   animation-delay: 0.3s;
 }
 
