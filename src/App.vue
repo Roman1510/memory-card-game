@@ -111,7 +111,6 @@ export default {
 // 2. information to the left side (floated)
 // 3. fix the button to restart
 // 4. fix the button to shuffle
-// 5. fix the behavior when the game is reset (the cards are under the modal)
 
 // future improvements
 // 1. add timer (timer will be from 0 to inf), the quantity of open/closes will be limited (by experiments)
@@ -129,37 +128,34 @@ export default {
       }
     "
   ></MainMenu>
-  <img
-    v-else
-    class="button"
-    :src="restartImage"
-    @click="prepareStart(difficulty)"
-  />
-  <img class="button" :src="restartImagePressed" @click="backToMenu()" />
-  <div class="center">
-    <transition-group
-      tag="section"
-      name="shuffle-animation"
-      class="board"
-      :class="{
-        hard: difficulty === 32,
-        medium: difficulty === 18,
-        easy: difficulty === 8,
-        easiest: difficulty === 2,
-      }"
-    >
-      <Card
-        v-for="card in gameList"
-        :key="`${card.value}-${card.sort}-${card.size}}`"
-        :value="card.value"
-        :visible="card.visible"
-        :position="card.position"
-        :matched="card.matched"
-        @select-card="flipCard"
-        :isSmall="difficulty === 32"
+  <div v-else>
+    <img class="button" :src="restartImage" @click="prepareStart(difficulty)" />
+    <img class="button" :src="restartImagePressed" @click="backToMenu()" />
+    <div class="center">
+      <transition-group
+        tag="section"
+        name="shuffle-animation"
+        class="board"
+        :class="{
+          hard: difficulty === 32,
+          medium: difficulty === 18,
+          easy: difficulty === 8,
+          easiest: difficulty === 2,
+        }"
       >
-      </Card>
-    </transition-group>
+        <Card
+          v-for="card in gameList"
+          :key="`${card.value}-${card.sort}-${card.size}}`"
+          :value="card.value"
+          :visible="card.visible"
+          :position="card.position"
+          :matched="card.matched"
+          @select-card="flipCard"
+          :isSmall="difficulty === 32"
+        >
+        </Card>
+      </transition-group>
+    </div>
   </div>
 </template>
 
@@ -184,7 +180,7 @@ h2 {
   text-align: center;
   color: #f103a1;
 }
-.center{
+.center {
   display: flex;
 }
 .board {
