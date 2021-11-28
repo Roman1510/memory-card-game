@@ -28,7 +28,10 @@ export default {
   },
   setup(props, context) {
     const getImgUrl = (pic) => {
-      return require("../assets/images/cards/" + pic + ".png");
+      return {
+        front: require("../assets/images/cards/" + pic + ".png"),
+        back: require("../assets/images/card-backs/cardback1.png"),
+      };
     };
 
     const flippedStyles = computed(() => {
@@ -38,8 +41,6 @@ export default {
     const smallIcon = computed(() => {
       return props.isSmall;
     });
-
-
 
     const selectCard = () => {
       context.emit("select-card", {
@@ -52,12 +53,11 @@ export default {
       selectCard,
       getImgUrl,
       flippedStyles,
-      smallIcon
+      smallIcon,
     };
   },
 };
 //the implementation of img for both cases doesn't make any sense, should refactor this one...
-
 </script>
 <template>
   <div
@@ -72,15 +72,11 @@ export default {
         'image-shake': !matched && flippedStyles,
       }"
     >
-      <img
-        :src="getImgUrl(value)"
-        :alt="value"
-      />
+      <img :src="getImgUrl(value).front" :alt="value" />
     </div>
-    <div
-      v-else
-      class="card-face is-back"
-    ></div>
+    <div v-else class="card-face is-back">
+      <img :src="getImgUrl(value).back" :alt="value" />
+    </div>
   </div>
 </template>
 <style scoped>
@@ -93,7 +89,7 @@ export default {
   transform-style: preserve-3d;
   cursor: pointer;
 }
-.card-wrapper>.card-face {
+.card-wrapper > .card-face {
   /* this is needed to center the card face inside a wrapper */
   display: flex;
   justify-content: center;
@@ -106,16 +102,9 @@ export default {
   width: 100%;
   height: 100%;
 }
-.card-face.is-front img {
+.card-face img {
   height: 72px;
   width: 72px;
-  transform: rotateY(180deg);
-}
-
-.card-face.is-back {
-  background-image: url("../assets/images/card-backs/cardback1.png");
-  background-size: 80px;
-  color: white;
   transform: rotateY(180deg);
 }
 
