@@ -72,10 +72,18 @@ export default {
         'image-shake': !matched && flippedStyles,
       }"
     >
-      <img :src="getImgUrl(value).front" :alt="value" />
+      <img
+        :src="getImgUrl(value).front"
+        :alt="value"
+        :class="{ 'smaller-image': smallIcon, 'default-image': !smallIcon }"
+      />
     </div>
     <div v-else class="card-face is-back">
-      <img :src="getImgUrl(value).back" :alt="value" />
+      <img
+        :src="getImgUrl(value).back"
+        :alt="value"
+        :class="{ 'smaller-image': smallIcon, 'default-image': !smallIcon }"
+      />
     </div>
   </div>
 </template>
@@ -102,10 +110,16 @@ export default {
   width: 100%;
   height: 100%;
 }
-.card-face img {
+/* .card-face img {
+  transform: rotateY(180deg);
+} */
+.default-image {
   height: 72px;
   width: 72px;
-  transform: rotateY(180deg);
+}
+.smaller-image {
+  height: 54px;
+  width: 54px;
 }
 
 .icon-checkmark {
