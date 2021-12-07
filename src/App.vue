@@ -107,6 +107,7 @@ export default {
   },
 };
 //current tasks
+// fix the music reset #1
 // 1. add blurred background to the app when main menu is active + parallax
 // 2. information to the left side (floated)
 // 3. fix the button to restart
