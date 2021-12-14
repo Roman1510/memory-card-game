@@ -183,6 +183,7 @@ h2 {
 }
 .center {
   display: flex;
+  justify-content: center;
 }
 .board {
   justify-content: center;
